@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -23,8 +24,8 @@ class UsersController extends Controller
             return abort(401);
         }
 
-        $users = User::all();
-
+        $users = User::where('id','!=',Auth::id())->get();
+        
         return view('admin.users.index', compact('users'));
     }
 
