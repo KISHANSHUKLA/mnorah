@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddEventImageToChurchesTable' => $baseDir . '/database/migrations/2021_05_06_123421_add_event_image_to_churches_table.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Admin\\PermissionsController' => $baseDir . '/app/Http/Controllers/Admin/PermissionsController.php',
@@ -29,6 +30,7 @@ return array(
     'App\\Http\\Requests\\Admin\\StorePermissionsRequest' => $baseDir . '/app/Http/Requests/Admin/StorePermissionsRequest.php',
     'App\\Http\\Requests\\Admin\\StoreRolesRequest' => $baseDir . '/app/Http/Requests/Admin/StoreRolesRequest.php',
     'App\\Http\\Requests\\Admin\\StoreUsersRequest' => $baseDir . '/app/Http/Requests/Admin/StoreUsersRequest.php',
+    'App\\Http\\Requests\\Admin\\UpdateChurchRequest' => $baseDir . '/app/Http/Requests/Admin/UpdateChurchRequest.php',
     'App\\Http\\Requests\\Admin\\UpdatePermissionsRequest' => $baseDir . '/app/Http/Requests/Admin/UpdatePermissionsRequest.php',
     'App\\Http\\Requests\\Admin\\UpdateRolesRequest' => $baseDir . '/app/Http/Requests/Admin/UpdateRolesRequest.php',
     'App\\Http\\Requests\\Admin\\UpdateUsersRequest' => $baseDir . '/app/Http/Requests/Admin/UpdateUsersRequest.php',

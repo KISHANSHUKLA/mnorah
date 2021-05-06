@@ -93,6 +93,8 @@ return [
             'ministries_helper'    => '',
             'event'           => 'Event',
             'event_helper'    => '',
+            'eventimage'           => 'Event Image Upload',
+            'event_helper'    => '',
 
             'created_at'               => 'Created at',
             'created_at_helper'        => '',

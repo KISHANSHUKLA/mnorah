@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form id="form" action="{{ route("admin.churches.update", [$church->id]) }}" method="POST" enctype="multipart/form-data">
+        <form id="formEvent" action="{{ route("admin.churches.update", [$church->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
@@ -139,7 +139,23 @@
                     {{ trans('cruds.church.fields.event_helper') }}
                 </p>
             </div>
-            <div>
+            <div class="custom-file form-group {{ $errors->has('eventimage') ? 'has-error' : '' }}">
+                <label for="eventimage">Event Image Upload *</label>
+                <img width="30px" onclick="onClick(this)" style="    border-radius: 100px;" height="30px" src="{{ asset($church->eventimage) }}">
+                <input type="file" name="eventimage" value="{{ old('event', isset($church) ? $church->eventimage : '') }}" class="custom-file-input" id="eventimage">
+                <label style="margin-top: 28px;" class="custom-file-label" for="eventimage">Choose file</label>
+                @if($errors->has('eventimage'))
+                <em class="invalid-feedback">
+                    {{ $errors->first('eventimage') }}
+                </em>
+            @endif
+            <p class="helper-block">
+                {{ trans('cruds.church.fields.event_helper') }}
+            </p>
+              </div>
+            <div style="float: left;
+            width: 100%;
+            margin-top: 30px;">
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
         </form>
@@ -147,4 +163,10 @@
 
     </div>
 </div>
+<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+    <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom">
+      <img id="img01">
+    </div>
+  </div>
 @endsection

@@ -31,30 +31,14 @@
                         <th>
                             {{ trans('cruds.church.fields.denomination') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.church.fields.venue') }}
-                        </th>
+                     
                         <th>
                             {{ trans('cruds.church.fields.day') }}
                         </th>
                         <th>
-                            {{ trans('cruds.church.fields.language') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.church.fields.Social') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.church.fields.vision') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.church.fields.leadership') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.church.fields.ministries') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.church.fields.event') }}
                         </th>
+                        <th>Image</th>
                        
                         <th>
                             &nbsp;
@@ -76,9 +60,7 @@
                             <td>
                                 {{ $church->denomination ?? '' }}
                             </td>
-                            <td>
-                                {{ $church->venue ?? '' }}
-                            </td>
+                          
                             <td>
                                 <?php 
                                 $date = date('l', strtotime($church->days));
@@ -86,22 +68,10 @@
                                 {{ $date ?? '' }}
                             </td>
                             <td>
-                                {{ $church->language ?? '' }}
-                            </td>
-                            <td>
-                                {{ $church->Social ?? '' }}
-                            </td>
-                            <td>
-                                {{ $church->vision ?? '' }}
-                            </td>
-                            <td>
-                                {{ $church->leadership ?? '' }}
-                            </td>
-                            <td>
-                                {{ $church->ministries ?? '' }}
-                            </td>
-                            <td>
                                 {{ $church->event ?? '' }}
+                            </td>
+                            <td style="text-align: center;">
+                                <img width="70px" height="70px" onclick="onClick(this)" style="border-radius: 100px;" src="{{ asset($church->eventimage) }}">
                             </td>
                             <td>
                                 <a class="btn btn-xs btn-info" href="{{ route('admin.churches.edit', $church->id) }}">
@@ -125,6 +95,12 @@
 
     </div>
 </div>
+<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+    <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom">
+      <img id="img01">
+    </div>
+  </div>
 @endsection
 @section('scripts')
 @parent

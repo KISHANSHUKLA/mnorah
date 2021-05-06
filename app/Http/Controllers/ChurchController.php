@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Admin\StoreChurchRequest;
 use App\Http\Requests\Admin\UpdateChurchRequest;
 use Exception;
+use App\Http\Controllers\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate as FacadesGate;
 use PhpParser\Node\Stmt\TryCatch;
 
 class ChurchController extends Controller
 {
+    use FileUploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -77,12 +79,29 @@ class ChurchController extends Controller
             if (! Gate::allows('users_manage')) {
                 return abort(401);
             }
-            Church::create($request->all());
+            $image = $request->file('eventimage');
+            $imageEvent = $this->saveImages($image,'event');
+
+            Church::create([
+            'user_id' => $request->user_id,
+            'denomination' => $request->denomination,
+            'venue' => $request->venue,
+            'days' => $request->days,
+            'language' => $request->language,
+            'Social' => $request->Social,
+            'vision' => $request->vision,
+            'leadership' => $request->leadership,
+            'ministries' => $request->ministries,
+            'event' => $request->event,
+            'eventimage' => $imageEvent,
+            ]);
+          
             toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
           //catch exception
           catch(Exception $e) {
+          
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        
@@ -131,7 +150,25 @@ class ChurchController extends Controller
             if (! Gate::allows('users_manage')) {
                 return abort(401);
             }
-              $church->update($request->all());
+            $image = $request->file('eventimage');
+            $imageEvent = $this->saveImages($image,'event');
+
+            $contact = Church::find($church->id);
+            $contact->user_id =  $request->get('user_id');
+            $contact->denomination = $request->get('denomination');
+            $contact->venue = $request->get('venue');
+            $contact->days = $request->get('days');
+            $contact->language = $request->get('language');
+            $contact->Social = $request->get('Social');
+            $contact->vision = $request->get('vision');
+            $contact->leadership = $request->get('leadership');
+            $contact->ministries = $request->get('ministries');
+            $contact->event = $request->get('event');
+            $contact->eventimage = $imageEvent;
+
+            $contact->save();
+
+
             toastr()->success('Data has been updated successfully!', 'Church Managemant');
           }
           

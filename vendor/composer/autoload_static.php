@@ -490,6 +490,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
     );
 
     public static $classMap = array (
+        'AddEventImageToChurchesTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_06_123421_add_event_image_to_churches_table.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PermissionsController.php',
@@ -513,6 +514,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'App\\Http\\Requests\\Admin\\StorePermissionsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/StorePermissionsRequest.php',
         'App\\Http\\Requests\\Admin\\StoreRolesRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/StoreRolesRequest.php',
         'App\\Http\\Requests\\Admin\\StoreUsersRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/StoreUsersRequest.php',
+        'App\\Http\\Requests\\Admin\\UpdateChurchRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/UpdateChurchRequest.php',
         'App\\Http\\Requests\\Admin\\UpdatePermissionsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/UpdatePermissionsRequest.php',
         'App\\Http\\Requests\\Admin\\UpdateRolesRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/UpdateRolesRequest.php',
         'App\\Http\\Requests\\Admin\\UpdateUsersRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/UpdateUsersRequest.php',

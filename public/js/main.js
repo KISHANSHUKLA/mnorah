@@ -54,7 +54,7 @@ $(document).ready(function() {
         }
     })
 
-    $('#form').validate({ // initialize the plugin
+    $('#formEvent').validate({ // initialize the plugin
 
         rules: {
 
@@ -112,8 +112,19 @@ $(document).ready(function() {
             event: {
                 required: true
             },
+            eventimage: {
+                required: true,
+                extension: "jpg|jpeg|png",
+                filesize: 200000 //max size 200 kb
+            }
 
-        }
+        },
+        messages: {
+            eventimage: {
+                required: "Please upload file.",
+                extension: "Please upload file in these format only (jpg, jpeg, png)."
+            }
+        },
 
     });
     // Chart.js scripts
@@ -275,3 +286,8 @@ $(document).ready(function() {
         });
     })(jQuery); // End of use strict
 });
+
+function onClick(element) {
+    document.getElementById("img01").src = element.src;
+    document.getElementById("modal01").style.display = "block";
+}

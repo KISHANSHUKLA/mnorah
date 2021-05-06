@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form id="form" action="{{ route("admin.churches.store") }}" method="POST" enctype="multipart/form-data">
+        <form id="formEvent" action="{{ route("admin.churches.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
 
                <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
@@ -139,6 +139,21 @@
                     {{ trans('cruds.church.fields.event_helper') }}
                 </p>
             </div>
+            <div class="custom-file form-group {{ $errors->has('eventimage') ? 'has-error' : '' }}">
+                <label for="eventimage">Event Image Upload *</label>
+                <input type="file" name="eventimage" class="custom-file-input" id="eventimage">
+                <label style="    margin-top: 28px;" class="custom-file-label" for="eventimage">Choose file</label>
+                @if($errors->has('eventimage'))
+                <em class="invalid-feedback">
+                    {{ $errors->first('eventimage') }}
+                </em>
+            @endif
+            <p class="helper-block">
+                {{ trans('cruds.church.fields.event_helper') }}
+            </p>
+              </div>
+          
+
             {{-- <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                 <label for="roles">{{ trans('cruds.church.fields.roles') }}*
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
@@ -157,7 +172,9 @@
                     {{ trans('cruds.church.fields.roles_helper') }}
                 </p>
             </div> --}}
-            <div>
+            <div style="float: left;
+            width: 100%;
+            margin-top: 30px;">
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
         </form>
