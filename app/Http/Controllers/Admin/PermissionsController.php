@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePermissionsRequest;
 use App\Http\Requests\Admin\UpdatePermissionsRequest;
+use Exception;
 
 class PermissionsController extends Controller
 {
@@ -48,10 +49,20 @@ class PermissionsController extends Controller
      */
     public function store(StorePermissionsRequest $request)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
-        Permission::create($request->all());
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+            Permission::create($request->all());
+            toastr()->success('Data has been saved successfully!', 'Permission Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+
+      
 
         return redirect()->route('admin.permissions.index');
     }
@@ -81,11 +92,21 @@ class PermissionsController extends Controller
      */
     public function update(UpdatePermissionsRequest $request, Permission $permission)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $permission->update($request->all());
+            toastr()->success('Data has been updated successfully!', 'Permission Managemant');
+          }
+          
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+       
 
-        $permission->update($request->all());
+      
 
         return redirect()->route('admin.permissions.index');
     }
@@ -99,12 +120,22 @@ class PermissionsController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
 
-        $permission->delete();
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $permission->delete();
+    
+            toastr()->success('Data has been deleted successfully!', 'Permission Managemant');
+          }
+          
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
 
+       
         return redirect()->route('admin.permissions.index');
     }
 

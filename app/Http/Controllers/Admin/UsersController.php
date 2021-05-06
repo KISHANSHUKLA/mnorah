@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
@@ -20,11 +21,23 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
 
-        $users = User::where('id','!=',Auth::id())->get();
+        try {
+           
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $users = User::where('id','!=',Auth::id())->get();
+            //toastr()->success('Data has been saved successfully!', 'Church Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+
+      
         
         return view('admin.users.index', compact('users'));
     }
@@ -52,13 +65,23 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
-        $user = User::create($request->all());
-        $roles = $request->input('roles') ? $request->input('roles') : [];
-        $user->assignRole($roles);
 
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+            $user = User::create($request->all());
+            $roles = $request->input('roles') ? $request->input('roles') : [];
+            $user->assignRole($roles);
+            toastr()->success('Data has been saved successfully!', 'User Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+
+       
         return redirect()->route('admin.users.index');
     }
 
@@ -88,13 +111,22 @@ class UsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, User $user)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
 
-        $user->update($request->all());
-        $roles = $request->input('roles') ? $request->input('roles') : [];
-        $user->syncRoles($roles);
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $user->update($request->all());
+            $roles = $request->input('roles') ? $request->input('roles') : [];
+            $user->syncRoles($roles);
+            toastr()->success('Data has been updated successfully!', 'User Managemant');
+          }
+          
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+       
 
         return redirect()->route('admin.users.index');
     }
@@ -118,12 +150,20 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
-
-        $user->delete();
-
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $user->delete();
+    
+            toastr()->success('Data has been deleted successfully!', 'User Managemant');
+          }
+          
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+      
         return redirect()->route('admin.users.index');
     }
 

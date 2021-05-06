@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRolesRequest;
 use App\Http\Requests\Admin\UpdateRolesRequest;
+use Exception;
 
 class RolesController extends Controller
 {
@@ -51,12 +52,24 @@ class RolesController extends Controller
      */
     public function store(StoreRolesRequest $request)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
-        $role = Role::create($request->except('permission'));
-        $permissions = $request->input('permission') ? $request->input('permission') : [];
-        $role->givePermissionTo($permissions);
+
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+            $role = Role::create($request->except('permission'));
+            $permissions = $request->input('permission') ? $request->input('permission') : [];
+            $role->givePermissionTo($permissions);
+            toastr()->success('Data has been saved successfully!', 'Role Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+
+
+     
 
         return redirect()->route('admin.roles.index');
     }
@@ -87,13 +100,22 @@ class RolesController extends Controller
      */
     public function update(UpdateRolesRequest $request, Role $role)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
-
-        $role->update($request->except('permission'));
-        $permissions = $request->input('permission') ? $request->input('permission') : [];
-        $role->syncPermissions($permissions);
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $role->update($request->except('permission'));
+            $permissions = $request->input('permission') ? $request->input('permission') : [];
+            $role->syncPermissions($permissions);
+            toastr()->success('Data has been updated successfully!', 'Role Managemant');
+          }
+          
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+       
+       
 
         return redirect()->route('admin.roles.index');
     }
@@ -118,12 +140,21 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $role->delete();
+    
+            toastr()->success('Data has been deleted successfully!', 'Role Managemant');
+          }
+          
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
 
-        $role->delete();
-
+    
         return redirect()->route('admin.roles.index');
     }
 

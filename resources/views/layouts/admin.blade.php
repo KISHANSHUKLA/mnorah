@@ -35,12 +35,12 @@
         <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url('/') }}">
             <span class="navbar-brand-full"><div class="loginLogo">
-              <img src="{{ asset('image/ic_logo_bottom.png') }}">
+          <img src="{{ asset('image/ic_logo_bottom.png') }}">
           </div></span>
             <span class="navbar-brand-minimized"><div class="loginLogo">
-              <img src="{{ asset('image/ic_logo_bottom.png') }}">
+       <img src="{{ asset('image/ic_logo_bottom.png') }}">
           </div></span>
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">

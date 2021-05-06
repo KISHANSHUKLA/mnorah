@@ -23,8 +23,22 @@ class ChurchController extends Controller
      */
     public function index()
     {
-        $churches = Church::with('user')
-        ->get();
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+            $churches = Church::with('user')
+            ->get();
+           // toastr()->success('Data has been saved successfully!', 'Church Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+       
+
+      
         return view('admin.churchs.index', compact('churches'));
     }
 
@@ -35,10 +49,19 @@ class ChurchController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
-        $users = User::where('id','!=',Auth::id())->get();
+        try {
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+            $users = User::where('id','!=',Auth::id())->get();
+            //toastr()->success('Data has been saved successfully!', 'Church Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+      
         return view('admin.churchs.create', compact('users'));
     }
 
