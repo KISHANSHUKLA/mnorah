@@ -24,6 +24,8 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
     @toastr_css
     @yield('styles')
 </head>
@@ -34,8 +36,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <span class="navbar-brand-full">{{ env('APP_NAME', 'Permissions Manager') }}</span>
-            <span class="navbar-brand-minimized">{{ env('APP_NAME', 'Permissions Manager') }}</span>
+            <span class="navbar-brand-full"><div class="loginLogo">
+              <img src="{{ asset('image/ic_logo_bottom.png') }}">
+          </div></span>
+            <span class="navbar-brand-minimized"><div class="loginLogo">
+              <img src="{{ asset('image/ic_logo_bottom.png') }}">
+          </div></span>
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>
