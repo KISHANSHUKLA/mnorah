@@ -79,6 +79,8 @@ return [
             'denomination_helper'      => '',
             'venue'        => 'Venue',
             'venue_helper' => '',
+            'import' => 'Import',
+            'import_helper' => '',
             'day'                 => 'Days',
             'day_helper'          => '',
             'language'                    => 'Language',
@@ -96,6 +98,26 @@ return [
             'eventimage'           => 'Event Image Upload',
             'event_helper'    => '',
 
+            'created_at'               => 'Created at',
+            'created_at_helper'        => '',
+            'updated_at'               => 'Updated at',
+            'updated_at_helper'        => '',
+            'deleted_at'               => 'Deleted at',
+            'deleted_at_helper'        => '',
+        ],
+    ],
+
+    // Church Invite COde field and title name
+    'invitecode'           => [
+        'title'          => 'Church Invite Codes',
+        'title_singular' => 'Church Invite Code',
+        'fields'         => [
+            'id'                       => 'ID',
+            'id_helper'                => '',
+            'invitecode'                     => 'Invite Code',
+            'invitecode_helper'              => '',
+            'global'             => 'Global',
+            'global_helper'      => '',
             'created_at'               => 'Created at',
             'created_at_helper'        => '',
             'updated_at'               => 'Updated at',

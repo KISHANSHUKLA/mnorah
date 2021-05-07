@@ -31,6 +31,7 @@ class ChurchController extends Controller
             }
             $churches = Church::with('user')
             ->get();
+            
            // toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -75,13 +76,14 @@ class ChurchController extends Controller
      */
     public function store(StoreChurchRequest $request)
     {   
+      
         try {
             if (! Gate::allows('users_manage')) {
                 return abort(401);
             }
             $image = $request->file('eventimage');
+            
             $imageEvent = $this->saveImages($image,'event');
-
             Church::create([
             'user_id' => $request->user_id,
             'denomination' => $request->denomination,
@@ -93,7 +95,7 @@ class ChurchController extends Controller
             'leadership' => $request->leadership,
             'ministries' => $request->ministries,
             'event' => $request->event,
-            'eventimage' => $imageEvent,
+            'eventimage' => json_encode($imageEvent),
             ]);
           
             toastr()->success('Data has been saved successfully!', 'Church Managemant');
@@ -150,29 +152,29 @@ class ChurchController extends Controller
             if (! Gate::allows('users_manage')) {
                 return abort(401);
             }
+           
             $image = $request->file('eventimage');
             $imageEvent = $this->saveImages($image,'event');
 
-            $contact = Church::find($church->id);
-            $contact->user_id =  $request->get('user_id');
-            $contact->denomination = $request->get('denomination');
-            $contact->venue = $request->get('venue');
-            $contact->days = $request->get('days');
-            $contact->language = $request->get('language');
-            $contact->Social = $request->get('Social');
-            $contact->vision = $request->get('vision');
-            $contact->leadership = $request->get('leadership');
-            $contact->ministries = $request->get('ministries');
-            $contact->event = $request->get('event');
-            $contact->eventimage = $imageEvent;
+            $jsonEncode = array_merge(json_decode($church->eventimage),$imageEvent);
+            $churchSave = Church::find($church->id);
+            $churchSave->user_id =  $request->get('user_id');
+            $churchSave->denomination = $request->get('denomination');
+            $churchSave->venue = $request->get('venue');
+            $churchSave->days = $request->get('days');
+            $churchSave->language = $request->get('language');
+            $churchSave->Social = $request->get('Social');
+            $churchSave->vision = $request->get('vision');
+            $churchSave->leadership = $request->get('leadership');
+            $churchSave->ministries = $request->get('ministries');
+            $churchSave->event = $request->get('event');
+            $churchSave->eventimage = json_encode($jsonEncode);
 
-            $contact->save();
-
-
+            $churchSave->save();
             toastr()->success('Data has been updated successfully!', 'Church Managemant');
           }
-          
           catch(Exception $e) {
+            dd($e->getMessage());
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        
@@ -192,7 +194,6 @@ class ChurchController extends Controller
             if (! Gate::allows('users_manage')) {
                 return abort(401);
             }
-    
             $church->delete();
             toastr()->success('Data has been deleted successfully!', 'Church Managemant');
           }

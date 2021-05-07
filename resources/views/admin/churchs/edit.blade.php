@@ -141,8 +141,7 @@
             </div>
             <div class="custom-file form-group {{ $errors->has('eventimage') ? 'has-error' : '' }}">
                 <label for="eventimage">Event Image Upload *</label>
-                <img width="30px" onclick="onClick(this)" style="    border-radius: 100px;" height="30px" src="{{ asset($church->eventimage) }}">
-                <input type="file" name="eventimage" value="{{ old('event', isset($church) ? $church->eventimage : '') }}" class="custom-file-input" id="eventimage">
+                <input type="file" name="eventimage[]" multiple value="{{ old('eventimage', isset($church) ? $church->eventimage : '') }}" class="custom-file-input" id="eventimage">
                 <label style="margin-top: 28px;" class="custom-file-label" for="eventimage">Choose file</label>
                 @if($errors->has('eventimage'))
                 <em class="invalid-feedback">
@@ -153,6 +152,19 @@
                 {{ trans('cruds.church.fields.event_helper') }}
             </p>
               </div>
+              <?php 
+                                    if(is_array(json_decode($church->eventimage))){
+                                        $jsonDecodeImages = json_decode($church->eventimage);
+                                    }else{
+                                        $jsonDecodeImages = $church->eventimage;
+                                    }
+                                    ?> 
+               <?php foreach ($jsonDecodeImages as $key => $jsonDecodeImage) { ?>
+                <img width="30px" onclick="onClick(this)" style="    border-radius: 100px;float: right;
+                margin-top: 20px;" height="30px" src="{{ asset($jsonDecodeImage) }}">
+               <?php } ?>                    
+                                
+                                
             <div style="float: left;
             width: 100%;
             margin-top: 30px;">

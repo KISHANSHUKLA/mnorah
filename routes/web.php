@@ -15,5 +15,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
     Route::resource('users', 'Admin\UsersController');
     Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
-    Route::resource('churches', 'ChurchController');    
+    Route::resource('churches', 'ChurchController');
+    Route::resource('invitecode', 'InvitecodeController');    
+    Route::get('/codeimport', 'InvitecodeController@importcode')->name('codeimport');   
+    Route::post('import', 'InvitecodeController@import')->name('invitecode.import');   
+    Route::get('/codestatus/{id}', 'InvitecodeController@codestatus')->name('codestatus');  
 });

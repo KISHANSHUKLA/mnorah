@@ -56,18 +56,22 @@ trait FileUploadTrait
 
         return $finalRequest;
     }
-    public function saveImages($file, $folder)
+    public function saveImages($files, $folder)
     {   
      
         $destinationPath = '/uploads/'.$folder.'/';
-      
+        $imageFile = array();
+        foreach($files as $file){
         $file_name = time().'-'.$file->getClientOriginalName();
         $image = Image::make($file);
         
         $image->resize(500, 500, function ($constraint) {
               $constraint->aspectRatio();
         })->save(public_path() . $destinationPath . $file_name);
-       
-        return $destinationPath.'/'.$file_name;
+
+        array_push($imageFile,$destinationPath.''.$file_name);
+    }
+  
+        return $imageFile;
     }
 }

@@ -71,7 +71,15 @@
                                 {{ $church->event ?? '' }}
                             </td>
                             <td style="text-align: center;">
-                                <img width="70px" height="70px" onclick="onClick(this)" style="border-radius: 100px;" src="{{ asset($church->eventimage) }}">
+                                <?php 
+                                    if(is_array(json_decode($church->eventimage))){
+                                        $jsonDecodeImage = json_decode($church->eventimage);
+                                    }else{
+                                        $jsonDecodeImage = $church->eventimage;
+                                    }
+                                   
+                                ?>
+                                <img width="70px" height="70px" onclick="onClick(this)" style="border-radius: 100px;" src="{{ asset($jsonDecodeImage['0']) }}">
                             </td>
                             <td>
                                 <a class="btn btn-xs btn-info" href="{{ route('admin.churches.edit', $church->id) }}">

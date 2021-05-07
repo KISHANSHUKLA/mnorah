@@ -65,6 +65,33 @@
                      
                     </ul>
                 </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+                        <i class="fa-fw fas fa-users nav-icon">
+
+                        </i>
+                       Church Invite Code
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="{{ route("admin.invitecode.index") }}" class="nav-link {{ request()->is('admin/invitecode') || request()->is('admin/invitecode/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-unlock-alt nav-icon">
+
+                                </i>
+                               Listing
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.codeimport") }}" class="nav-link {{ request()->is('admin/invitecode') || request()->is('admin/invitecode/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-unlock-alt nav-icon">
+
+                                </i>
+                               Invite Code Import
+                            </a>
+                        </li>
+                     
+                    </ul>
+                </li>
             @endcan
             <li class="nav-item">
                 <a href="{{ route('auth.change_password') }}" class="nav-link">

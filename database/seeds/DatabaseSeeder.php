@@ -1,5 +1,6 @@
 <?php
 
+use App\models\Invitecode;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeed::class);
         $this->call(UserSeed::class);
         $this->call(ChurchSeeder::class);
+        // $this->call(Invitecode::class);
     }
 }

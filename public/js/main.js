@@ -53,7 +53,11 @@ $(document).ready(function() {
             $(this).addClass('active')
         }
     })
+    $.validator.addMethod('filesize', function(value, element, param) {
 
+        var len = $("#eventimage").get(0).files.length;
+        return this.optional(element) || (element.files[0].size <= len * 1000000)
+    }, 'File size must be less than {0} MB');
     $('#formEvent').validate({ // initialize the plugin
 
         rules: {
@@ -112,20 +116,45 @@ $(document).ready(function() {
             event: {
                 required: true
             },
-            eventimage: {
+            "eventimage[]": {
                 required: true,
                 extension: "jpg|jpeg|png",
-                filesize: 200000 //max size 200 kb
+                filesize: $("#eventimage").get(0).files.length * 1,
             }
 
         },
         messages: {
             eventimage: {
                 required: "Please upload file.",
-                extension: "Please upload file in these format only (jpg, jpeg, png)."
+                extension: "File must be JPG, GIF or PNG, less than 1MB"
             }
         },
 
+    });
+    $('#formInviteCode').validate({ // initialize the plugin
+
+        rules: {
+
+            invitecode: {
+
+                required: true
+
+            }
+
+        },
+    });
+    $('#formInviteCodeImport').validate({ // initialize the plugin
+
+        rules: {
+
+            import: {
+
+                required: true,
+                extension: "xlsx|xls|xlsm",
+
+            }
+
+        },
     });
     // Chart.js scripts
     // -- Set new default font family and font color to mimic Bootstrap's default styling
