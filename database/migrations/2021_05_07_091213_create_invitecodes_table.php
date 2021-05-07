@@ -16,7 +16,7 @@ class CreateInvitecodesTable extends Migration
         Schema::create('invitecodes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('invitecode')->nullable();
-            $table->text('global')->default(0);
+            $table->text('global')->nullable();
             $table->timestamps();
         });
     }
