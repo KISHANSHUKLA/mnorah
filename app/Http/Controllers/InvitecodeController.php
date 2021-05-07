@@ -22,7 +22,7 @@ class InvitecodeController extends Controller
                 return abort(401);
             }
             $invitecodes = Invitecode::
-            where('global',false)
+            where('global',NULL)
             ->get();
             
            // toastr()->success('Data has been saved successfully!', 'Church Managemant');
