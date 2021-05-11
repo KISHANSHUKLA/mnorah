@@ -50,7 +50,15 @@
                                 {{ $invitecode->invitecode ?? '' }}
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-warning" href="{{ route('admin.codestatus', $invitecode->id) }}">{{ $invitecode->global ?? '' }}</a>
+                                    <?php if($invitecode->global == 0){ ?>
+                                        <a class="btn btn-xs btn-warning" href="{{ route('admin.codestatus', $invitecode->id) }}">
+                                            Deactive </a>
+                                    <?php } else {?>
+                                        <a class="btn btn-xs btn-success" href="{{ route('admin.codestatus', $invitecode->id) }}">
+                                            Active </a>
+                                        <?php } ?>
+                                
+                                 
                             </td>
                           
                             <td>

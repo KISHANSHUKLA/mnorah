@@ -21,11 +21,8 @@ class InvitecodeController extends Controller
             if (! Gate::allows('users_manage')) {
                 return abort(401);
             }
-            $invitecodes = Invitecode::
-            where('global',NULL)
-            ->get();
-            
-           // toastr()->success('Data has been saved successfully!', 'Church Managemant');
+            $invitecodes = Invitecode::get();
+            // toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
           //catch exception

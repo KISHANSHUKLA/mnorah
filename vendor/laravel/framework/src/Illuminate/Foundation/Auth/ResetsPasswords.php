@@ -101,16 +101,20 @@ trait ResetsPasswords
      * @return void
      */
     protected function resetPassword($user, $password)
-    {
+    {    
         $this->setUserPassword($user, $password);
 
         $user->setRememberToken(Str::random(60));
 
         $user->save();
-
+       
         event(new PasswordReset($user));
-
+        if($user->flag == 'web'){
+            echo 'dfds';
         $this->guard()->login($user);
+        }else{
+            echo 'suss';
+        }
     }
 
     /**
