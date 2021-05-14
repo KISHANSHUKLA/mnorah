@@ -129,7 +129,6 @@ class InvitecodeController extends Controller
             toastr()->success('Data has been updated successfully!', 'Church Invite Code Managemant');
           }
           catch(Exception $e) {
-            dd($e->getMessage());
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        
@@ -202,7 +201,13 @@ class InvitecodeController extends Controller
             return abort(401);
         }
         $churchInviteCode = Invitecode::find($Id);
-        $churchInviteCode->global =  true;
+
+        if($churchInviteCode->global == 1){
+          $churchInviteCode->global =  false;   
+        }else{
+          $churchInviteCode->global =  true;
+        
+        }
         $churchInviteCode->save();
            
         toastr()->success('Status update successfully!', 'Church Invite Code Managemant');

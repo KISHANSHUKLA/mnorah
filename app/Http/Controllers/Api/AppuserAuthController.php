@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Appuser;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AppUserResource;
 use App\User;
 use Exception;
 use Illuminate\Auth\Events\Validated;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use PhpParser\Node\Stmt\TryCatch;
+use Symfony\Component\Console\Input\Input;
 
 class AppuserAuthController extends Controller
 {
@@ -20,6 +22,32 @@ class AppuserAuthController extends Controller
 
     public function register(Request $request){
 
+        if (User::where('email', '=', $request->email)->exists()) {
+            $loginData = $request->validate([
+                'email' => 'email|required',
+                'password' => 'required'
+            ]);
+            if (!auth()->attempt($loginData)) {
+                return response([
+                    'success' => false,
+                    'message' => 'Invalid Credentials']);
+            }
+            if(!auth()->user()->flag ==  'web' ){
+                return response([
+                    'success' => false,
+                    'message' => 'Invalid Credentials']);
+            }
+            $user = Auth::user();
+    
+            $user['token'] = $user->createToken('appToken')->accessToken;
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+                'message' => 'Login successfully',
+                
+            ]);   
+        }else{
+           
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users',
@@ -33,7 +61,7 @@ class AppuserAuthController extends Controller
             Appuser::create([
                 "user_id" => $appUser->id,
                 "json" => json_encode($validatedData),
-                "usertype" => $request->usertype,
+                "usertype" => 'app',
                 'device_token' => $request->device_token,
             ]);
         }
@@ -43,34 +71,8 @@ class AppuserAuthController extends Controller
             'success' => true,
             'data' => $appUser,     
         ]);
-      
-    }
-
-    public function login(Request $request){
-
-        $loginData = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
-        if (!auth()->attempt($loginData)) {
-            return response([
-                'success' => false,
-                'message' => 'Invalid Credentials']);
         }
-        if(!auth()->user()->flag ==  'web' ){
-            return response([
-                'success' => false,
-                'message' => 'Invalid Credentials']);
-        }
-        $user = Auth::user();
-         $user['token'] = $user->createToken('appToken')->accessToken;
-        return response()->json([
-            'success' => true,
-            'data' => $user,
-            'message' => 'Login successfully',
-            
-        ]);
-       
+        
     }
 
     public function logout(Request $request)
@@ -191,6 +193,56 @@ class AppuserAuthController extends Controller
             'success' => true,
             'message' => 'Reset password link sent on your email id.',
           ]);
+    }
+
+    public function social(Request $request){
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'id' => 'required'
+        ]);
+
+        $validatedData['password'] = '';
+        $validatedData['flag'] = $request->usertype;
+        $appUser = User::create($validatedData);
+        if($appUser){
+           $appUserData =  Appuser::create([
+                "user_id" => $appUser->id,
+                "json" => json_encode($validatedData),
+                "usertype" => $request->login_type,
+                'device_token' => $request->device_token,
+            ]);
+        }
+
+        $appUser['login_type'] = $appUserData->usertype;
+        $appUser['token'] = $appUser->createToken('authToken')->accessToken;
+
+        return response()->json([
+            'success' => true,
+            'data' => $appUser,     
+        ]);
+      
+    }    
+
+
+    public function getuser(){
+
+        try {
+            
+            if(Auth::check()){
+                
+                $user = Appuser::where('user_id',Auth::user()->id)->first();
+                return new AppUserResource($user);
+
+            }else{
+                throw new Exception("Something went wrong!", 404);
+            }
+        }
+        //catch exception
+          catch(Exception $e) {
+              $e->getMessage();
+          }
     }
 
 }

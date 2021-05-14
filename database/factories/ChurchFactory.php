@@ -17,6 +17,10 @@ $factory->define(Church::class, function (Faker $faker) {
         'leadership' => 'Lorem Lorem',
         'ministries' => 'Lorem Lorem',
         'event' => 'Lorem Lorem',
+        'eventimage' => json_encode(
+            [
+                '0'=>'https://i1.wp.com/www.parkingspace23.com/wp-content/uploads/2018/06/church1.jpg'
+                ]),
     ];
     
 });

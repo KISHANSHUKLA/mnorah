@@ -174,7 +174,6 @@ class ChurchController extends Controller
             toastr()->success('Data has been updated successfully!', 'Church Managemant');
           }
           catch(Exception $e) {
-            dd($e->getMessage());
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        

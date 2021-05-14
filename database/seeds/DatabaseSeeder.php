@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(PermissionSeed::class);
-        $this->call(RoleSeed::class);
-        $this->call(UserSeed::class);
+       // $this->call(PermissionSeed::class);
+       // $this->call(RoleSeed::class);
+       // $this->call(UserSeed::class);
         $this->call(ChurchSeeder::class);
         // $this->call(Invitecode::class);
     }

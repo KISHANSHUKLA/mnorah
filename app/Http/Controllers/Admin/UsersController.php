@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Appuser;
 use App\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
@@ -28,7 +29,9 @@ class UsersController extends Controller
                 return abort(401);
             }
     
-            $users = User::where('id','!=',Auth::id())->get();
+            $users = User::where('id','!=',Auth::id())
+            ->where('flag','web')
+            ->get();
             //toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -181,5 +184,113 @@ class UsersController extends Controller
 
         return response()->noContent();
     }
+
+    public function appUser(){
+
+        try {
+           
+            if (! Gate::allows('users_manage')) {
+                return abort(401);
+            }
+    
+            $users = User::
+            with('appuser')
+           ->where('id','!=',Auth::id())
+            ->where('flag','!=','web')
+            ->get();
+            //toastr()->success('Data has been saved successfully!', 'Church Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+
+      
+        
+        return view('admin.users.appindex', compact('users'));
+
+    }
+
+    public function leadership($Id){
+
+        try {
+          if (! Gate::allows('users_manage')) {
+              return abort(401);
+          }
+          $appUserLeadership= Appuser::find($Id);
+          
+          if($appUserLeadership->Leadershipteam == 1){
+            $appUserLeadership->Leadershipteam =  0;   
+          }else{
+            $appUserLeadership->Leadershipteam =  1;
+          
+          }
+          $appUserLeadership->save();
+             
+          toastr()->success('Status update successfully!', 'User Managemant');
+        }
+        
+        catch(Exception $e) {
+         
+          toastr()->error('An error has occurred please try again later.', $e->getMessage());
+        }
+        
+        return redirect()->route('admin.appusers');
+      }
+      public function medically($Id){
+
+        try {
+          if (! Gate::allows('users_manage')) {
+              return abort(401);
+          }
+          $appUsermedicallyverified = Appuser::find($Id);
+          
+          if($appUsermedicallyverified->medicallyverified == 1){
+            $appUsermedicallyverified->medicallyverified =  0;   
+          }else{
+            $appUsermedicallyverified->medicallyverified =  1;
+          
+          }
+          $appUsermedicallyverified->save();
+             
+          toastr()->success('Status update successfully!', 'User Managemant');
+        }
+        
+        catch(Exception $e) {
+         
+          toastr()->error('An error has occurred please try again later.', $e->getMessage());
+        }
+        
+        return redirect()->route('admin.appusers');
+      } 
+
+      public function community($Id){
+
+        try {
+          if (! Gate::allows('users_manage')) {
+              return abort(401);
+          }
+          $appUsercommunityverified = Appuser::find($Id);
+          
+          if($appUsercommunityverified->communityverified == 1){
+            $appUsercommunityverified->communityverified =  0;   
+          }else{
+            $appUsercommunityverified->communityverified =  1;
+          
+          }
+          $appUsercommunityverified->save();
+             
+          toastr()->success('Status update successfully!', 'User Managemant');
+        }
+        
+        catch(Exception $e) {
+         
+          toastr()->error('An error has occurred please try again later.', $e->getMessage());
+        }
+        
+        return redirect()->route('admin.appusers');
+      } 
 
 }

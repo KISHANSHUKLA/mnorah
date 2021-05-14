@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use App\Api\followers;
+use App\models\Church;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -48,5 +50,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-   
+    public function appuser(){
+
+        return $this->hasOne(Appuser::class);
+    }
+
+    
+    public function followers()
+    {
+    return $this->belongsToMany(Church::class, 'followers', 'follower_id', 'church_id')->withTimestamps();
+    }
+
+
 }
