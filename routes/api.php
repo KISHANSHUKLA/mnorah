@@ -20,9 +20,9 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 // });
 
 //Route::post('login', 'API\AppuserAuthController@login');
-Route::post('register', 'API\AppuserAuthController@register');
-Route::post('social', 'API\AppuserAuthController@social');
-Route::post('password/email', 'API\AppuserAuthController@forgot');
+Route::post('register', 'Api\AppuserAuthController@register');
+Route::post('social', 'Api\AppuserAuthController@social');
+Route::post('password/email', 'Api\AppuserAuthController@forgot');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('logout', 'Api\AppuserAuthController@logout');
