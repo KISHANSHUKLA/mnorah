@@ -27,7 +27,7 @@ Route::post('password/email', 'Api\AppuserAuthController@forgot');
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('logout', 'Api\AppuserAuthController@logout');
     Route::get('user','Api\AppuserAuthController@getuser');
-Route::get('emailVerification', 'API\AppuserAuthController@emailVerification');
+Route::get('emailVerification', 'Api\AppuserAuthController@emailVerification');
     Route::post('verifyEmail', 'Api\AppuserAuthController@verifyEmail');
     Route::resource('church', 'Api\AppChurchController');
     Route::post('search','Api\AppChurchController@getSearch');
