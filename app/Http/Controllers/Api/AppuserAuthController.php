@@ -94,16 +94,16 @@ class AppuserAuthController extends Controller
      }
 
      public function emailVerification(){
-        
+      
         DB::beginTransaction();
         try {
-            if (Auth::user()) {
+            if (Auth::check()) {
                 $user = Auth::user();
                
                 $to_name = $user->name;
                 $to_email = $user->email;
     
-                $six_digit_random_number = mt_rand(100000, 999999);
+                $six_digit_random_number = mt_rand(1000, 9999);
                 $data = array('name'=>$to_name, "body" => $six_digit_random_number);
                 Mail::send('email.verify', $data, function($message) use ($to_name, $to_email) {
                 $message->to($to_email, $to_name)->subject('Email Verification');

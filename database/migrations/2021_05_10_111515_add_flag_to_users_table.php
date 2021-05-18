@@ -14,7 +14,7 @@ class AddFlagToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('flag')->default('web')->nullable();
+            $table->string('flag')->default('web')->nullable();
             });
     }
 
@@ -26,7 +26,7 @@ class AddFlagToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('flag');
+            $table->string('flag');
         });
     }
 }
