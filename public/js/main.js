@@ -68,6 +68,17 @@ $(document).ready(function() {
 
             },
 
+             name: {
+
+                required: true
+
+            },
+             location: {
+
+                required: true
+
+            },
+
             denomination: {
 
                 required: true

@@ -86,6 +86,8 @@ class ChurchController extends Controller
             $imageEvent = $this->saveImages($image,'event');
             Church::create([
             'user_id' => $request->user_id,
+            'name' => $redirect->name,
+            'location' => $redirect->location,
             'denomination' => $request->denomination,
             'venue' => $request->venue,
             'days' => $request->days,
@@ -159,6 +161,8 @@ class ChurchController extends Controller
             $jsonEncode = array_merge(json_decode($church->eventimage),$imageEvent);
             $churchSave = Church::find($church->id);
             $churchSave->user_id =  $request->get('user_id');
+            $churchSave->name =  $request->get('name');
+            $churchSave->user_id =  $request->get('location');
             $churchSave->denomination = $request->get('denomination');
             $churchSave->venue = $request->get('venue');
             $churchSave->days = $request->get('days');

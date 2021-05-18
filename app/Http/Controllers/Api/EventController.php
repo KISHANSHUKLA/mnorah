@@ -25,6 +25,9 @@ class EventController extends Controller
         try {
             if (Auth::check()) {
                 $user = User::find(Auth::user()->id);
+                $start = $_GET['start'];
+                $limit = $_GET['limit'];
+        
                 if(! $user) {
                     DB::rollback();
                     return response()->json([
@@ -32,7 +35,10 @@ class EventController extends Controller
                         'message' => 'User does not exist.'
                     ]);
             }
-                $events = events::where('status',1)->paginate(10);
+                $events = events::where('status',1)
+                ->offset($start)
+                ->limit($limit)
+                ->get();
                 $event =  EventlistResource::collection($events);
                 DB::commit();
                 return response()->json([

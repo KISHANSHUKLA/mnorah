@@ -30,6 +30,36 @@
                 </p>
             </div>
         </div>
+
+         <div class="col-md-6 float-left">
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ old('name', isset($church) ? $church->name : '') }}">
+                @if($errors->has('name'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('name') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.church.fields.denomination_helper') }}
+                </p>
+            </div>
+        </div>
+
+         <div class="col-md-6 float-left">
+            <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
+                <label for="location">Location *</label>
+                <input type="text" id="location" name="location" class="form-control" value="{{ old('location', isset($church) ? $church->location : '') }}">
+                @if($errors->has('location'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('location') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.church.fields.denomination_helper') }}
+                </p>
+            </div>
+        </div>
         <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('denomination') ? 'has-error' : '' }}">
                 <label for="denomination">{{ trans('cruds.church.fields.denomination') }} *</label>

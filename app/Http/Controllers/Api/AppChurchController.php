@@ -26,14 +26,23 @@ class AppChurchController extends Controller
 
 
     public function index()
-    {
+    {   
         try {
             
             if(Auth::check()){
+                $start = $_GET['start'];
+                $limit = $_GET['limit'];
+        
+                $churches = Church::
+                offset($start)
+                ->limit($limit)
+                ->get();
 
-                $churches = Church::paginate(10);
-                return $resource = new AppChurchResource($churches);
-
+                return response()->json([
+                    'success' => true,
+                     'data' => AppChurchResource::collection($churches)
+                  ]);
+                
             }else{
                 throw new Exception("Something went wrong!", 404);
             }
@@ -41,6 +50,10 @@ class AppChurchController extends Controller
         //catch exception
           catch(Exception $e) {
               $e->getMessage();
+              return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong!',
+              ]);
           }
       
         //return UserResource::collection($user);
@@ -68,12 +81,39 @@ class AppChurchController extends Controller
 
     public function getSearch(Request $request) {
 
-        $data = $request->get('data');
-        $search_drivers = Church::where('denomination', 'like', "%{$data}%")
-                         ->orWhere('venue', 'like', "%{$data}%")
-                         ->paginate(10);
-                         
-        return  $search_drivers  = AppChurchResource::collection($search_drivers);
+
+        try {
+            
+            if(Auth::check()){
+                
+                $data = $request->get('data');
+                $start = $_GET['start'];
+                $limit = $_GET['limit'];
+        
+                $search_drivers = Church::where('denomination', 'like', "%{$data}%")
+                                 ->orWhere('venue', 'like', "%{$data}%")
+                                 ->offset($start)
+                                 ->limit($limit)
+                                 ->get();
+
+                return response()->json([
+                    'success' => true,
+                     'data' => AppChurchResource::collection($search_drivers)
+                  ]);
+
+            }else{
+                throw new Exception("Something went wrong!", 404);
+            }
+        }
+        //catch exception
+          catch(Exception $e) {
+              $e->getMessage();
+              return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+              ]);
+          }
+
     }
   
 }
