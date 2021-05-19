@@ -10,6 +10,9 @@ use App\models\Api\events as ApiEvents;
 use App\Http\Controllers\Traits\FileUploadTrait;
 use App\User;
 use App\models\Api\events;
+use App\models\Api\likes;
+use App\models\Api\comments;
+use App\models\Api\witness;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,11 +42,11 @@ class EventController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->get();
-                $event =  EventlistResource::collection($events);
+                
                 DB::commit();
                 return response()->json([
                     'success' => true,
-                    'data' => $event,
+                    'data' => EventlistResource::collection($events),
                 ]);
             }
         }
@@ -143,6 +146,112 @@ class EventController extends Controller
                 'message' => $e->getMessage(), //Something went wrong
             ]);
         }
+        }
+
+
+        public function eventLike(Request $request){
+
+            DB::beginTransaction();
+            try {
+                if (Auth::check()) {
+                    $value['user_id'] = Auth::user()->id;
+                    $value['event_id'] = $request->event_id;
+                    $value['status'] = $request->status;
+                    if(! Auth::user()->id) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'User does not exist.'
+                        ]);
+                    }
+                    
+                    likes::create($value);
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Event like successfully'
+                    ]);
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
+
+        public function eventComment(Request $request){
+
+            DB::beginTransaction();
+            try {
+                if (Auth::check()) {
+                    $value['user_id'] = Auth::user()->id;
+                    $value['event_id'] = $request->event_id;
+                    $value['comment'] = $request->comment;
+                    if(! Auth::user()->id) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'User does not exist.'
+                        ]);
+                    }
+                    
+                    comments::create($value);
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Event comment successfully'
+                    ]);
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
+
+        public function eventWitness(Request $request){
+
+            DB::beginTransaction();
+            try {
+                if (Auth::check()) {
+                    $value['user_id'] = Auth::user()->id;
+                    $value['event_id'] = $request->event_id;
+                    $value['status'] = $request->status;
+                    if(! Auth::user()->id) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'User does not exist.'
+                        ]);
+                    }
+                    
+                    witness::create($value);
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Event witness successfully'
+                    ]);
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
         }
     }
 

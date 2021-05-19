@@ -84,6 +84,10 @@ public function unFollowUser(Request $request)
         DB::beginTransaction();
     try {
         if (Auth::check()) {
+
+            $start = $_GET['start'];
+            $limit = $_GET['limit'];
+
             $user = User::find(Auth::user()->id);
             if(! $user) {
                 DB::rollback();
@@ -91,10 +95,16 @@ public function unFollowUser(Request $request)
                 $message = 'User does not exist.';
         }
         
-        $followList = followers::where('follower_id',$user->id)
-        ->paginate(10);
-        DB::commit();
-        return FollowlistResource::collection($followList);
+        $followList = followers::
+        where('follower_id',$user->id)
+        ->offset($start)
+        ->limit($limit)
+        ->get();
+            return response()->json([
+                'success' => true,
+                 'data' => FollowlistResource::collection($followList),
+              ]);
+            DB::commit();
         }
     }
     catch(Exception $e) {

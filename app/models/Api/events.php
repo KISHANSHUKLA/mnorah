@@ -1,7 +1,7 @@
 <?php
 
 namespace App\models\Api;
-
+use App\models\Api\likes;
 use Illuminate\Database\Eloquent\Model;
 
 class events extends Model
