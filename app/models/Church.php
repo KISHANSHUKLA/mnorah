@@ -14,4 +14,12 @@ class Church extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function churchRecode($id){
+        $commentCount = Church::
+        where('id',$id)->first();
+
+        return $commentCount;
+
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\models\Church;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FollowlistResource extends JsonResource
@@ -14,6 +15,15 @@ class FollowlistResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+
+        $a = new Church();
+        return [
+            'id' => $this->id,
+            'follower_id' => $this->follower_id,
+            'church' => $a->churchRecode($this->church_id),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
+    
 }
