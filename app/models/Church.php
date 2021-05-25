@@ -18,8 +18,9 @@ class Church extends Model
     public function churchRecode($id){
         $commentCount = Church::
         where('id',$id)->first();
+        $commentCount['eventimage'] = json_decode($commentCount->eventimage);
+        return $commentCount;   
 
-        return $commentCount;
 
     }
 }

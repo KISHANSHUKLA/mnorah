@@ -45,5 +45,6 @@ Route::get('emailVerification', 'Api\AppuserAuthController@emailVerification');
     Route::post('event/like','Api\EventController@eventLike');
     Route::post('event/comment','Api\EventController@eventComment');
     Route::post('event/witness','Api\EventController@eventWitness');
+    Route::post('event/eventLikeList','Api\EventController@eventWitness');
 
 });

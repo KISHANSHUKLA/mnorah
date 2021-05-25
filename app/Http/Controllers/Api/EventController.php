@@ -253,5 +253,40 @@ class EventController extends Controller
                 ]);
             }
         }
+
+        public function eventLikeList(Request $request){
+
+            DB::beginTransaction();
+            try {
+                if (Auth::check()) {
+                    $value['user_id'] = Auth::user()->id;
+                    $value['event_id'] = $request->event_id;
+                    $value['status'] = $request->status;
+                    if(! Auth::user()->id) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'User does not exist.'
+                        ]);
+                    }
+                    
+                    witness::create($value);
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Event witness successfully'
+                    ]);
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
     }
 
