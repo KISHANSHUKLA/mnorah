@@ -43,8 +43,12 @@ Route::get('emailVerification', 'Api\AppuserAuthController@emailVerification');
     Route::post('addevent','Api\EventController@addEvent');
     Route::post('deletevent','Api\EventController@eventDelete');
     Route::post('event/like','Api\EventController@eventLike');
+    Route::post('event/share','Api\EventController@eventShare');
     Route::post('event/comment','Api\EventController@eventComment');
     Route::post('event/witness','Api\EventController@eventWitness');
-    Route::post('event/eventLikeList','Api\EventController@eventWitness');
+    Route::post('event/eventLikeList','Api\EventController@eventlikeList');
+    Route::post('event/eventCommentList','Api\EventController@eventCommentList');
+    Route::post('event/eventWitnessList','Api\EventController@eventWitnessList');
+    Route::post('event/eventShareList','Api\EventController@eventShareList');
 
 });

@@ -12,6 +12,7 @@ use App\User;
 use App\models\Api\events;
 use App\models\Api\likes;
 use App\models\Api\comments;
+use App\models\Api\share;
 use App\models\Api\witness;
 use Exception;
 use Illuminate\Http\Request;
@@ -184,6 +185,42 @@ class EventController extends Controller
             }
         }
 
+
+        public function eventShare(Request $request){
+
+            DB::beginTransaction();
+            try {
+                if (Auth::check()) {
+                    $value['user_id'] = Auth::user()->id;
+                    $value['event_id'] = $request->event_id;
+                    $value['share_status'] = $request->status;
+                    if(! Auth::user()->id) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'User does not exist.'
+                        ]);
+                    }
+                    
+                    share::create($value);
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Event share successfully'
+                    ]);
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
+
         public function eventComment(Request $request){
 
             DB::beginTransaction();
@@ -254,29 +291,114 @@ class EventController extends Controller
             }
         }
 
-        public function eventLikeList(Request $request){
+        public function eventlikeList(Request $request){
 
-            DB::beginTransaction();
             try {
                 if (Auth::check()) {
-                    $value['user_id'] = Auth::user()->id;
-                    $value['event_id'] = $request->event_id;
-                    $value['status'] = $request->status;
-                    if(! Auth::user()->id) {
-                        DB::rollback();
+
+                    $eventLikes = likes::where('event_id',$request->id)->get();
+                    if(count($eventLikes) != 0){
+                        return response()->json([
+                            'success' => true,
+                            'data' => $eventLikes
+                        ]);
+                    }else{
                         return response()->json([
                             'success' => false,
-                            'message' => 'User does not exist.'
+                            'message' => 'Recode not found!'
                         ]);
                     }
                     
-                    witness::create($value);
-                    DB::commit();
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
 
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Event witness successfully'
-                    ]);
+        public function eventCommentList(Request $request){
+
+            try {
+                if (Auth::check()) {
+
+                    $eventLikes = comments::where('event_id',$request->id)->get();
+                    if(count($eventLikes) != 0){
+                        return response()->json([
+                            'success' => true,
+                            'data' => $eventLikes
+                        ]);
+                    }else{
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Recode not found!'
+                        ]);
+                    }
+                    
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
+
+        public function eventWitnessList(Request $request){
+
+            try {
+                if (Auth::check()) {
+
+                    $eventLikes = witness::where('event_id',$request->id)->get();
+                    if(count($eventLikes) != 0){
+                        return response()->json([
+                            'success' => true,
+                            'data' => $eventLikes
+                        ]);
+                    }else{
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Recode not found!'
+                        ]);
+                    }
+                    
+                    
+               }
+            }
+            catch(Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(), //Something went wrong
+                ]);
+            }
+        }
+
+        public function eventShareList(Request $request){
+
+            try {
+                if (Auth::check()) {
+
+                    $eventLikes = share::where('event_id',$request->id)->get();
+                    if(count($eventLikes) != 0){
+                        return response()->json([
+                            'success' => true,
+                            'data' => $eventLikes
+                        ]);
+                    }else{
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Recode not found!'
+                        ]);
+                    }
+                    
                     
                }
             }
