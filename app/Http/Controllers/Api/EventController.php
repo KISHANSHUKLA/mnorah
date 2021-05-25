@@ -296,7 +296,9 @@ class EventController extends Controller
             try {
                 if (Auth::check()) {
 
-                    $eventLikes = likes::where('event_id',$request->id)->get();
+                    $eventLikes = likes::
+                    with('user')
+                    ->where('event_id',$request->id)->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
@@ -326,7 +328,9 @@ class EventController extends Controller
             try {
                 if (Auth::check()) {
 
-                    $eventLikes = comments::where('event_id',$request->id)->get();
+                    $eventLikes = comments::
+                    with('user')
+                    ->where('event_id',$request->id)->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
@@ -356,7 +360,9 @@ class EventController extends Controller
             try {
                 if (Auth::check()) {
 
-                    $eventLikes = witness::where('event_id',$request->id)->get();
+                    $eventLikes = witness::
+                    with('user')
+                    ->where('event_id',$request->id)->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
@@ -386,7 +392,9 @@ class EventController extends Controller
             try {
                 if (Auth::check()) {
 
-                    $eventLikes = share::where('event_id',$request->id)->get();
+                    $eventLikes = share::
+                    with('user')
+                    ->where('event_id',$request->id)->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,

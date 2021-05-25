@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\models\Api\comments;
 use App\models\Api\witness;
+use App\User;
+
 class likes extends Model
 {
     protected $fillable = ['user_id','event_id','status', 'created_at', 'updated_at'];
@@ -71,5 +73,10 @@ class likes extends Model
 
         return $commentCount;
 
+    }
+
+    public function user(){
+
+        return $this->hasOne(User::class, 'id');
     }
 }
