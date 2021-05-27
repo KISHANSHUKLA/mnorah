@@ -91,7 +91,16 @@
         <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('days') ? 'has-error' : '' }}">
                 <label for="days">{{ trans('cruds.church.fields.day') }} *</label>
-                <input type="text" id="days" name="days" class="form-control date">
+
+                <select name="days" class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
+                    <option value="" disabled selected>Choose your country</option>
+                    <option value="1">USA</option>
+                    <option value="2">Germany</option>
+                    <option value="3">France</option>
+                    <option value="4">Poland</option>
+                    <option value="5">Japan</option>
+                  </select>
+                
                 @if($errors->has('days'))
                     <em class="invalid-feedback">
                         {{ $errors->first('days') }}

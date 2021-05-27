@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\models\Api\followers;
 use App\models\Church;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,11 +17,10 @@ class FollowlistResource extends JsonResource
     {
 
         $a = new Church();
-        $b = new followers();
+    
         return [
             'id' => $this->id,
             'follower_id' => $this->follower_id,
-            'isfollow' => $b->followget($this->church_id),
             'church' => $a->churchRecode($this->church_id),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

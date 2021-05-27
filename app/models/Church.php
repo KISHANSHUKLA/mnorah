@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use App\models\Api\followers;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +19,8 @@ class Church extends Model
     public function churchRecode($id){
         $commentCount = Church::
         where('id',$id)->first();
+        $b = new followers();
+        $commentCount['isfollow'] = $b->followget($commentCount->id);
         $commentCount['eventimage'] = json_decode($commentCount->eventimage);
         return $commentCount;   
 
