@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Appuser;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AppUserResource;
+use App\models\Api\limit;
 use App\User;
 use Exception;
 use Illuminate\Auth\Events\Validated;
@@ -102,7 +103,36 @@ class AppuserAuthController extends Controller
                
                 $to_name = $user->name;
                 $to_email = $user->email;
+                
+
+                $limitcheck = limit::where('user_id',$user->id)->first();
+
+                if($limitcheck == null){
+                    $limit = 1;
+                      
+                limit::create([
+                    'user_id' => $user->id,
+                    'opt' => $limit,
+                    ]);
     
+                }else{
+                    $limitval = $limitcheck->opt;
+                    $limit = $limitval + 1;
+    
+                    if($limit > 5){
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'You don\'t have resend otp because attachment limit  5 time',
+                          ]);
+                    }else{
+                        $limitSave = limit::find($limitcheck->id);
+                        $limitSave->opt =  $limit;
+                        $limitSave->save();
+                    }
+    
+                    
+                }
+
                 $six_digit_random_number = mt_rand(1000, 9999);
                 $data = array('name'=>$to_name, "body" => $six_digit_random_number);
                 Mail::send('email.verify', $data, function($message) use ($to_name, $to_email) {
@@ -114,6 +144,8 @@ class AppuserAuthController extends Controller
                 $Appuser = Appuser::find($appUserId->id);
                 $Appuser->verifycode =  $six_digit_random_number;
                 $Appuser->save();
+
+
 
                 DB::commit();
                 $status = true;
@@ -185,14 +217,55 @@ class AppuserAuthController extends Controller
 
 
      public function forgot(Request $request) {
+        
         $credentials = request()->validate(['email' => 'required|email']);
 
-        Password::sendResetLink($credentials);
+        $user = User::where('email',$request->email)->first();
+
+        if($user == null){
+            return response()->json([
+            'success' =>false,
+            'message' => 'Something went wrong',
+          ]);
+        }else{
+
+            $limitcheck = limit::where('user_id',$user->id)->first();
+
+            if($limitcheck == null){
+                $limit = 1;
+                  
+            limit::create([
+                'user_id' => $user->id,
+                'forgot_password' => $limit,
+                ]);
+
+            }else{
+                $limitval = $limitcheck->forgot_password;
+                $limit = $limitval + 1;
+
+                if($limit > 5){
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'You don\'t have forgot password because attachment limit  5 time
+                        ',
+                      ]);
+                }else{
+                    $limitSave = limit::find($limitcheck->id);
+                    $limitSave->forgot_password =  $limit;
+                    $limitSave->save();
+                }
+
+                
+            }
+          
+            Password::sendResetLink($credentials);
 
         return response()->json([
             'success' => true,
             'message' => 'Reset password link sent on your email id.',
           ]);
+        }
+        
     }
 
     public function social(Request $request){
