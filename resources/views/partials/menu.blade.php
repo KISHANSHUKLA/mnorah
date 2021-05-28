@@ -43,6 +43,14 @@
                                 {{ trans('cruds.user.title') }}
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.appusers") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-user nav-icon">
+
+                                </i>
+                               App Users
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

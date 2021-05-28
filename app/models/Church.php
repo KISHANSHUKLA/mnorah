@@ -21,6 +21,7 @@ class Church extends Model
         where('id',$id)->first();
         $b = new followers();
         $commentCount['isfollow'] = $b->followget($commentCount->id);
+        $commentCount['days'] = json_decode($commentCount->days);
         $commentCount['eventimage'] = json_decode($commentCount->eventimage);
         return $commentCount;   
 
