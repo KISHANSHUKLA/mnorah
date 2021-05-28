@@ -22,7 +22,7 @@ class AppChurchResource extends JsonResource
             'location' => $this->location,
             'denomination' => $this->denomination,
             'venue' => $this->venue,
-            'days' => $this->days,
+            'days' => json_decode($this->days),
             'language' => $this->language,
             'Social' =>$this->Social,
             'vision' =>$this->vision,

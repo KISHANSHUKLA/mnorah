@@ -68,12 +68,12 @@ $(document).ready(function() {
 
             },
 
-             name: {
+            name: {
 
                 required: true
 
             },
-             location: {
+            location: {
 
                 required: true
 

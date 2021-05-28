@@ -57,6 +57,15 @@ class ChurchController extends Controller
                 return abort(401);
             }
             $users = User::where('id','!=',Auth::id())->get();
+            $days = [
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
+              'Sunday',
+            ];
             //toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -65,7 +74,7 @@ class ChurchController extends Controller
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
       
-        return view('admin.churchs.create', compact('users'));
+        return view('admin.churchs.create', compact('users','days'));
     }
 
     /**
@@ -76,7 +85,6 @@ class ChurchController extends Controller
      */
     public function store(StoreChurchRequest $request)
     {   
-      
         try {
             if (! Gate::allows('users_manage')) {
                 return abort(401);
@@ -86,11 +94,11 @@ class ChurchController extends Controller
             $imageEvent = $this->saveImages($image,'event');
             Church::create([
             'user_id' => $request->user_id,
-            'name' => $redirect->name,
-            'location' => $redirect->location,
+            'name' => $request->name,
+            'location' => $request->location,
             'denomination' => $request->denomination,
             'venue' => $request->venue,
-            'days' => $request->days,
+            'days' => json_encode($request->days),
             'language' => $request->language,
             'Social' => $request->Social,
             'vision' => $request->vision,
@@ -135,9 +143,18 @@ class ChurchController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
+        $days = [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday',
+        ];
         $users = User::where('id','!=',Auth::id())->get();
-
-        return view('admin.churchs.edit', compact('church', 'users'));
+        $church['days'] = json_decode($church->days);
+        return view('admin.churchs.edit', compact('church', 'users','days'));
     }
 
     /**
@@ -162,10 +179,10 @@ class ChurchController extends Controller
             $churchSave = Church::find($church->id);
             $churchSave->user_id =  $request->get('user_id');
             $churchSave->name =  $request->get('name');
-            $churchSave->user_id =  $request->get('location');
+            $churchSave->location =  $request->get('location');
             $churchSave->denomination = $request->get('denomination');
             $churchSave->venue = $request->get('venue');
-            $churchSave->days = $request->get('days');
+            $churchSave->days = json_encode($request->get('days'));
             $churchSave->language = $request->get('language');
             $churchSave->Social = $request->get('Social');
             $churchSave->vision = $request->get('vision');
@@ -178,6 +195,7 @@ class ChurchController extends Controller
             toastr()->success('Data has been updated successfully!', 'Church Managemant');
           }
           catch(Exception $e) {
+            dd($e->getMessage());
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        

@@ -140,6 +140,7 @@ return array(
     'Carbon\\Translator' => $vendorDir . '/nesbot/carbon/src/Carbon/Translator.php',
     'ChangeFlagTable' => $baseDir . '/database/migrations/2021_05_11_115600_change_flag_table.php',
     'ChangeGlobalTable' => $baseDir . '/database/migrations/2021_05_11_115808_change_global_table.php',
+    'ChangeUserDaysDatatypeTable' => $baseDir . '/database/migrations/2021_05_28_091258_change_user_days_datatype_table.php',
     'ChangeUserIdtypeTable' => $baseDir . '/database/migrations/2021_05_13_052135_change_user_idtype_table.php',
     'ChangeUserflagTable' => $baseDir . '/database/migrations/2021_05_12_053755_change_userflag_table.php',
     'ChurchSeeder' => $baseDir . '/database/seeds/ChurchSeeder.php',

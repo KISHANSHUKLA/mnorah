@@ -791,6 +791,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'ChangeFlagTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_11_115600_change_flag_table.php',
         'ChangeGlobalTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_11_115808_change_global_table.php',
+        'ChangeUserDaysDatatypeTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_28_091258_change_user_days_datatype_table.php',
         'ChangeUserIdtypeTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_13_052135_change_user_idtype_table.php',
         'ChangeUserflagTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_12_053755_change_userflag_table.php',
         'ChurchSeeder' => __DIR__ . '/../..' . '/database/seeds/ChurchSeeder.php',

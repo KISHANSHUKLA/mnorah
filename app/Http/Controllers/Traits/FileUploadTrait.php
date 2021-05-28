@@ -60,7 +60,7 @@ trait FileUploadTrait
     {   
        if($folder == 'event'){
         $destinationPath = '/uploads/'.$folder.'/';
-        $imageFile;
+        $imageFile= array();
         foreach($files as $file){
         $file_name = time().'-'.$file->getClientOriginalName();
         $image = Image::make($file);

@@ -89,18 +89,24 @@
             </div>
         </div>
         <div class="col-md-6 float-left">
+
             <div class="form-group {{ $errors->has('days') ? 'has-error' : '' }}">
-                <label for="days">{{ trans('cruds.church.fields.day') }} *</label>
-                <input type="text" id="days" name="days" class="form-control date">
+                <label for="days">days *
+                    <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                <select name="days[]" id="days" class="form-control select2" multiple="multiple" required>
+                    @foreach($days as $id => $day)
+                        <option value="{{ $day }}">{{ $day }}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('days'))
                     <em class="invalid-feedback">
                         {{ $errors->first('days') }}
                     </em>
                 @endif
-                <p class="helper-block">
-                    {{ trans('cruds.church.fields.day_helper') }}
-                </p>
+                
             </div>
+
         </div>
         <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('language') ? 'has-error' : '' }}">

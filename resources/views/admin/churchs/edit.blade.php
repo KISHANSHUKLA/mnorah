@@ -10,6 +10,7 @@
         <form id="formEvent" action="{{ route("admin.churches.update", [$church->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
                 <label for="user_id">{{ trans('cruds.church.fields.name') }} *
                     {{-- <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
@@ -29,7 +30,8 @@
                     {{ trans('cruds.church.fields.name_helper') }}
                 </p>
             </div>
-
+        </div>
+        <div class="col-md-6 float-left">
               <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label for="name">Name *</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name', isset($church) ? $church->name : '') }}">
@@ -42,8 +44,9 @@
                     {{ trans('cruds.church.fields.denomination_helper') }}
                 </p>
             </div>
+        </div>
 
-
+        <div class="col-md-6 float-left">
               <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
                 <label for="location">Location *</label>
                 <input type="text" id="location" name="location" class="form-control" value="{{ old('location', isset($church) ? $church->location : '') }}">
@@ -56,7 +59,8 @@
                     {{ trans('cruds.church.fields.denomination_helper') }}
                 </p>
             </div>
-
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('denomination') ? 'has-error' : '' }}">
                 <label for="denomination">{{ trans('cruds.church.fields.denomination') }} *</label>
                 <input type="text" id="denomination" name="denomination" class="form-control" value="{{ old('denomination', isset($church) ? $church->denomination : '') }}">
@@ -69,6 +73,8 @@
                     {{ trans('cruds.church.fields.denomination_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('venue') ? 'has-error' : '' }}">
                 <label for="venue">{{ trans('cruds.church.fields.venue') }} *</label>
                 <input type="text" id="venue" name="venue" class="form-control" value="{{ old('venue', isset($church) ? $church->venue : '') }}">
@@ -81,18 +87,30 @@
                     {{ trans('cruds.church.fields.venue_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
+            
             <div class="form-group {{ $errors->has('days') ? 'has-error' : '' }}">
-                <label for="days">{{ trans('cruds.church.fields.day') }} *</label>
-                <input type="text" id="days" name="days" class="form-control date" value="{{ old('days', isset($church) ? $church->days : '') }}">
+                <label for="days">days *
+                    <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                <select name="days[]" id="days" class="form-control select2" multiple="multiple" required>
+                    @foreach($days as $id => $day)
+                        <option value="{{ $day }}" <?php if($day == in_array($day,$church->days) ){ ?>
+                            selected
+                       <?php } ?>>{{ $day }}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('days'))
                     <em class="invalid-feedback">
                         {{ $errors->first('days') }}
                     </em>
                 @endif
-                <p class="helper-block">
-                    {{ trans('cruds.church.fields.day_helper') }}
-                </p>
+                
             </div>
+
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('language') ? 'has-error' : '' }}">
                 <label for="language">{{ trans('cruds.church.fields.language') }} *</label>
                 <input type="text" id="language" name="language" class="form-control" value="{{ old('language', isset($church) ? $church->language : '') }}">
@@ -105,7 +123,8 @@
                     {{ trans('cruds.church.fields.language_helper') }}
                 </p>
             </div>
-
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('Social') ? 'has-error' : '' }}">
                 <label for="Social">{{ trans('cruds.church.fields.Social') }} *</label>
                 <input type="text" id="Social" name="Social" class="form-control" value="{{ old('Social', isset($church) ? $church->Social : '') }}">
@@ -118,6 +137,8 @@
                     {{ trans('cruds.church.fields.Social_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('vision') ? 'has-error' : '' }}">
                 <label for="vision">{{ trans('cruds.church.fields.vision') }} *</label>
                 <input type="text" id="vision" name="vision" class="form-control" value="{{ old('vision', isset($church) ? $church->vision : '') }}">
@@ -130,6 +151,8 @@
                     {{ trans('cruds.church.fields.vision_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('leadership') ? 'has-error' : '' }}">
                 <label for="leadership">{{ trans('cruds.church.fields.leadership') }} *</label>
                 <input type="text" id="leadership" name="leadership" class="form-control" value="{{ old('leadership', isset($church) ? $church->leadership : '') }}">
@@ -142,6 +165,8 @@
                     {{ trans('cruds.church.fields.leadership_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('ministries') ? 'has-error' : '' }}">
                 <label for="ministries">{{ trans('cruds.church.fields.ministries') }} *</label>
                 <input type="text" id="ministries" name="ministries" class="form-control" value="{{ old('ministries', isset($church) ? $church->ministries : '') }}">
@@ -154,6 +179,8 @@
                     {{ trans('cruds.church.fields.ministries_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('event') ? 'has-error' : '' }}">
                 <label for="event">{{ trans('cruds.church.fields.event') }} *</label>
                 <input type="text" id="event" name="event" class="form-control" value="{{ old('event', isset($church) ? $church->event : '') }}">
@@ -166,6 +193,8 @@
                     {{ trans('cruds.church.fields.event_helper') }}
                 </p>
             </div>
+        </div>
+        <div class="col-md-6 float-left">
             <div class="custom-file form-group {{ $errors->has('eventimage') ? 'has-error' : '' }}">
                 <label for="eventimage">Event Image Upload *</label>
                 <input type="file" name="eventimage[]" multiple value="{{ old('eventimage', isset($church) ? $church->eventimage : '') }}" class="custom-file-input" id="eventimage">
@@ -179,6 +208,7 @@
                 {{ trans('cruds.church.fields.event_helper') }}
             </p>
               </div>
+        
               <?php 
                                     if(is_array(json_decode($church->eventimage))){
                                         $jsonDecodeImages = json_decode($church->eventimage);
@@ -197,6 +227,7 @@
             margin-top: 30px;">
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
+        </div>
         </form>
 
 

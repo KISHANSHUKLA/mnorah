@@ -63,7 +63,11 @@
                           
                             <td>
                                 <?php 
-                                $date = date('l', strtotime($church->days));
+                                if(is_array(json_decode($church->days))){
+                                    $date = implode(', ', json_decode($church->days));
+                                }else{
+                                    $date = date('l', strtotime($church->days));
+                                }
                                 ?>
                                 {{ $date ?? '' }}
                             </td>
