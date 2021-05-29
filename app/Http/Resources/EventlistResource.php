@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Resources;
+
+use App\models\Api\events;
 use App\models\Api\likes;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\URL;
 
@@ -16,9 +19,10 @@ class EventlistResource extends JsonResource
     public function toArray($request)
     {   
         $a = new likes;
+        $b = new events;
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'user' => $b->userget($this->user_id),
             'message' => $this->message,
             'image' => URL::to('/').''.$this->image,
             'status' => $this->status,
