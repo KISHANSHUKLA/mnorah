@@ -789,6 +789,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'Carbon\\Traits\\Units' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Units.php',
         'Carbon\\Traits\\Week' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Week.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
+        'ChangeEventsDeafulTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_29_053856_change_events_deaful_table.php',
         'ChangeFlagTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_11_115600_change_flag_table.php',
         'ChangeGlobalTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_11_115808_change_global_table.php',
         'ChangeUserDaysDatatypeTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_28_091258_change_user_days_datatype_table.php',

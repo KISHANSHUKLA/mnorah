@@ -74,6 +74,7 @@ trait FileUploadTrait
     }else{
         $imageFile = array();
         $destinationPath = '/uploads/'.$folder.'/';
+
         $file_name = time().'-'.$files->getClientOriginalName();
         $image = Image::make($files);
         $image->resize(500, 500, function ($constraint) {

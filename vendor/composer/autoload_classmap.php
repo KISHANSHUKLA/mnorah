@@ -138,6 +138,7 @@ return array(
     'Carbon\\Traits\\Units' => $vendorDir . '/nesbot/carbon/src/Carbon/Traits/Units.php',
     'Carbon\\Traits\\Week' => $vendorDir . '/nesbot/carbon/src/Carbon/Traits/Week.php',
     'Carbon\\Translator' => $vendorDir . '/nesbot/carbon/src/Carbon/Translator.php',
+    'ChangeEventsDeafulTable' => $baseDir . '/database/migrations/2021_05_29_053856_change_events_deaful_table.php',
     'ChangeFlagTable' => $baseDir . '/database/migrations/2021_05_11_115600_change_flag_table.php',
     'ChangeGlobalTable' => $baseDir . '/database/migrations/2021_05_11_115808_change_global_table.php',
     'ChangeUserDaysDatatypeTable' => $baseDir . '/database/migrations/2021_05_28_091258_change_user_days_datatype_table.php',

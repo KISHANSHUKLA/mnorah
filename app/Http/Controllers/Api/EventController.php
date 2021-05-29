@@ -64,6 +64,7 @@ class EventController extends Controller
     public function addEvent(Request $request){
 
         DB::beginTransaction();
+
         try {
             if (Auth::check()) {
                 $user = User::find(Auth::user()->id);
@@ -74,15 +75,13 @@ class EventController extends Controller
                         'message' => 'User does not exist.'
                     ]);
             }
-
-            $validation = $request->validate([
-                'message' => 'required',
-                'image' => 'required'
-            ]);
-
+            
             $validation['user_id'] = Auth::user()->id;
+            $validation['message'] = $request->message;
+            $validation['image'] = $request->image;
 
             $image = $request->file('image');
+           
             $imageEvent = $this->saveImages($image,'eventimage');
             $validation['image'] = $imageEvent['0'];
 
