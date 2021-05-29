@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 use App\models\Api\likes;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\URL;
 
 class EventlistResource extends JsonResource
 {
@@ -19,7 +20,7 @@ class EventlistResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'message' => $this->message,
-            'image' => $this->image,
+            'image' => URL::to('/').''.$this->image,
             'status' => $this->status,
             'islike' => $a->like($this->id),
             'like_count' => $a->likecount($this->id),

@@ -66,10 +66,19 @@ class AppChurchController extends Controller
             if(Auth::check()){
                 
                 $churches = Church::find($request->id);
-                return  new AppChurchResource($churches);
+
+                return response()->json([
+                    'success' => true,
+                     'data' => new AppChurchResource($churches)
+                  ]);
+                
+
 
             }else{
-                throw new Exception("Something went wrong!", 404);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Something went wrong!',
+                  ]);
             }
         }
         //catch exception
@@ -90,16 +99,22 @@ class AppChurchController extends Controller
                 $start = $_GET['start'];
                 $limit = $_GET['limit'];
         
-                $search_drivers = Church::where('denomination', 'like', "%{$data}%")
-                                 ->orWhere('venue', 'like', "%{$data}%")
+                $search_drivers = Church::where('name', 'like', "%{$data}%")
                                  ->offset($start)
                                  ->limit($limit)
                                  ->get();
-
+                
+                if(count($search_drivers) != 0){
                 return response()->json([
                     'success' => true,
                      'data' => AppChurchResource::collection($search_drivers)
                   ]);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Recode not found!',
+                      ]);
+                }
 
             }else{
                 throw new Exception("Something went wrong!", 404);
