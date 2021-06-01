@@ -10,7 +10,7 @@ class Appuser extends Model
 {
     use Notifiable;
     use HasRoles;
-    protected $fillable = ['user_id','json','verifycode','usertype','device_token'];
+    protected $fillable = ['user_id','json','verifycode','usertype','mobile','image','device_token'];
 
 
     public function user(){

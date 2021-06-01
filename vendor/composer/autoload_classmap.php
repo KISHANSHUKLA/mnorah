@@ -9,6 +9,7 @@ return array(
     'AddDeviceTokenTable' => $baseDir . '/database/migrations/2021_05_10_122100_add_device_token_table.php',
     'AddEventImageToChurchesTable' => $baseDir . '/database/migrations/2021_05_06_123421_add_event_image_to_churches_table.php',
     'AddFlagToUsersTable' => $baseDir . '/database/migrations/2021_05_10_111515_add_flag_to_users_table.php',
+    'AddMobileImageTable' => $baseDir . '/database/migrations/2021_06_01_121322_add_mobile_image_table.php',
     'App\\Appuser' => $baseDir . '/app/Appuser.php',
     'App\\Console\\Commands\\limitcheck' => $baseDir . '/app/Console/Commands/limitcheck.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',

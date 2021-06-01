@@ -26,6 +26,7 @@ Route::post('password/email', 'Api\AppuserAuthController@forgot');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('logout', 'Api\AppuserAuthController@logout');
+    Route::post('updateProfile', 'Api\AppuserAuthController@updateProfile');
     Route::get('user','Api\AppuserAuthController@getuser');
 Route::get('emailVerification', 'Api\AppuserAuthController@emailVerification');
     Route::post('verifyEmail', 'Api\AppuserAuthController@verifyEmail');

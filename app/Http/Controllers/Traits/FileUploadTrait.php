@@ -71,6 +71,17 @@ trait FileUploadTrait
     }
   
         return $imageFile;
+    }elseif($folder == 'eventimage'){
+        $imageFile = array();
+        $destinationPath = '/uploads/'.$folder.'/';
+
+        $file_name = time().'-'.$files->getClientOriginalName();
+        $image = Image::make($files);
+        $image->resize(500, 500, function ($constraint) {
+              $constraint->aspectRatio();
+        })->save(public_path() . $destinationPath . $file_name);
+         array_push($imageFile,$destinationPath.''.$file_name);
+        return $imageFile;
     }else{
         $imageFile = array();
         $destinationPath = '/uploads/'.$folder.'/';

@@ -660,6 +660,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'AddDeviceTokenTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_10_122100_add_device_token_table.php',
         'AddEventImageToChurchesTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_06_123421_add_event_image_to_churches_table.php',
         'AddFlagToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_10_111515_add_flag_to_users_table.php',
+        'AddMobileImageTable' => __DIR__ . '/../..' . '/database/migrations/2021_06_01_121322_add_mobile_image_table.php',
         'App\\Appuser' => __DIR__ . '/../..' . '/app/Appuser.php',
         'App\\Console\\Commands\\limitcheck' => __DIR__ . '/../..' . '/app/Console/Commands/limitcheck.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',

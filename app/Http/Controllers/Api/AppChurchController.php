@@ -6,6 +6,7 @@ use App\Appuser;
 use App\Exceptions\API\APIException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AppChurchResource;
+use App\Http\Controllers\Traits\FileUploadTrait;
 use App\Http\Resources\AppUserResource;
 use App\Http\Resources\UserResource;
 use App\models\Church;
@@ -23,7 +24,7 @@ class AppChurchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    use FileUploadTrait;
 
     public function index()
     {   
