@@ -297,7 +297,9 @@ class EventController extends Controller
 
                     $eventLikes = likes::
                     with('user')
-                    ->where('event_id',$request->id)->get();
+                    ->where('event_id',$request->id)
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
@@ -329,7 +331,9 @@ class EventController extends Controller
 
                     $eventLikes = comments::
                     with('user')
-                    ->where('event_id',$request->id)->get();
+                    ->where('event_id',$request->id)
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
@@ -361,7 +365,9 @@ class EventController extends Controller
 
                     $eventLikes = witness::
                     with('user')
-                    ->where('event_id',$request->id)->get();
+                    ->where('event_id',$request->id)
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
@@ -393,7 +399,9 @@ class EventController extends Controller
 
                     $eventLikes = share::
                     with('user')
-                    ->where('event_id',$request->id)->get();
+                    ->where('event_id',$request->id)
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,

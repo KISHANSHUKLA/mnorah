@@ -25,8 +25,29 @@ class likes extends Model
 
     }
 
+    public function share($id){
+        $like = share::
+        where('user_id',auth::user()->id)
+        ->where('event_id',$id)->first();
+
+        if ($like === null) {
+            return 0;
+         }else{
+            return 1;
+        }
+
+    }
+
     public function likecount($id){
         $likeCount = likes::
+        where('event_id',$id)->count();
+
+        return $likeCount;
+
+    }
+
+    public function sharecount($id){
+        $likeCount = share::
         where('event_id',$id)->count();
 
         return $likeCount;
