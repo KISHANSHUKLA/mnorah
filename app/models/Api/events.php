@@ -1,6 +1,8 @@
 <?php
 
 namespace App\models\Api;
+
+use App\Appuser;
 use App\models\Api\likes;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +14,16 @@ class events extends Model
     public function userget($user_id){
 
         
-        return User::where('id',$user_id)->first();
+        $user =  User::where('id',$user_id)->first();
+
+        
+        $appUser = Appuser::where('user_id',$user->id)->first();
+
+        $user['Leadershipteam'] = $appUser->Leadershipteam;
+        $user['medicallyverified'] = $appUser->medicallyverified;
+        $user['communityverified'] = $appUser->communityverified;
+        
+        return $user;
         
     }
 }
