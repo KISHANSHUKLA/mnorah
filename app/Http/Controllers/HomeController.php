@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Appuser;
 use App\Http\Requests;
+use App\models\Api\events;
+use App\models\Church;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $events = events::with('user')
+        ->where("status",0)->get();
+        
+        $appUser = Appuser::count();
+        $churchCount = Church::count();
+        $feedCount = events::
+        where('status',1)
+        ->count();
+        
+        return view('home',compact('events','appUser','churchCount','feedCount'));
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\models\Api\events;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -291,6 +292,55 @@ class UsersController extends Controller
         }
         
         return redirect()->route('admin.appusers');
+      } 
+
+
+      public function feedapprove($Id){
+
+        try {
+          if (! Gate::allows('users_manage')) {
+              return abort(401);
+          }
+          $findEvent = events::find($Id);
+          
+          if($findEvent->status == 0){
+            $findEvent->status =  1;   
+          }
+          $findEvent->save();
+             
+          toastr()->success('Feed approve successfully!', 'Feed Managemant');
+        }
+        
+        catch(Exception $e) {
+         
+          toastr()->error('An error has occurred please try again later.', $e->getMessage());
+        }
+        
+        return redirect()->route('admin.home');
+      } 
+
+      public function rejectfeed($Id){
+
+        try {
+          if (! Gate::allows('users_manage')) {
+              return abort(401);
+          }
+          $findEvent = events::find($Id);
+          
+          if($findEvent->status == 0){
+            $findEvent->status =  2;   
+          }
+          $findEvent->save();
+             
+          toastr()->success('Feed rejected successfully!', 'Feed Managemant');
+        }
+        
+        catch(Exception $e) {
+         
+          toastr()->error('An error has occurred please try again later.', $e->getMessage());
+        }
+        
+        return redirect()->route('admin.home');
       } 
 
 }

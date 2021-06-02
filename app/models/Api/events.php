@@ -27,4 +27,8 @@ class events extends Model
         return $user;
         
     }
+
+    public function user(){
+        return $this->hasOne(User::class,'id');
+    }
 }

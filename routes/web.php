@@ -24,4 +24,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/leadership/{id}', 'Admin\UsersController@leadership')->name('leadership');  
     Route::get('/community/{id}', 'Admin\UsersController@community')->name('community');
     Route::get('/medically/{id}', 'Admin\UsersController@medically')->name('medically');
+
+    Route::get('/feed/{id}', 'Admin\UsersController@feedapprove')->name('approvefeed'); 
+    Route::get('/rejectfeed/{id}', 'Admin\UsersController@rejectfeed')->name('rejectfeed');  
 });

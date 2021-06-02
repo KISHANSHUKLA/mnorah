@@ -18,6 +18,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class EventController extends Controller
 {
@@ -86,6 +87,8 @@ class EventController extends Controller
             $validation['image'] = $imageEvent['0'];
 
             $appUser = events::create($validation);
+            
+            $appUser['image'] = URL::to('/').$appUser->image;
             
             DB::commit();
             return response()->json([

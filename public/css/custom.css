@@ -201,3 +201,25 @@ table.dataTable thead .sorting_desc {
     background-position: center;
     background-size: cover;
 }
+
+.sidebar-fixed .sidebar {
+    position: fixed;
+    z-index: 1019;
+    width: 220px !important;
+    height: 100vh;
+}
+
+.sidebar .nav {
+    width: 215px;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 0;
+}
+
+.sidebar .sidebar-nav {
+    position: relative;
+    -ms-flex: 1;
+    flex: 1;
+    width: 220px;
+}
