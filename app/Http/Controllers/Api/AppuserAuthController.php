@@ -150,10 +150,10 @@ class AppuserAuthController extends Controller
             if (Auth::check()) {
                 $user = Auth::user();
                
+                $isResend = $_GET['isResend'];
                 $to_name = $user->name;
                 $to_email = $user->email;
                 
-
                 $limitcheck = limit::where('user_id',$user->id)->first();
 
                 if($limitcheck == null){
@@ -165,9 +165,14 @@ class AppuserAuthController extends Controller
                     ]);
     
                 }else{
+
+                    if($isResend == 0){
                     $limitval = $limitcheck->opt;
-                    $limit = $limitval + 1;
-    
+                    $limit = $limitval;
+                    }else{
+                        $limitval = $limitcheck->opt;
+                        $limit = $limitval + 1;
+                    }
                     if($limit > 5){
                         return response()->json([
                             'success' => false,
