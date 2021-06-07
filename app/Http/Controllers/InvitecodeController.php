@@ -7,6 +7,7 @@ use Exception;
 use App\Imports\BulkImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvitecodeController extends Controller
 {
@@ -18,10 +19,15 @@ class InvitecodeController extends Controller
     public function index()
     {
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
+          if(Gate::allows('church_manage')) {
+            $invitecodes = Invitecode::
+            where('user_id',Auth::user()->id)
+            ->get();
+            }elseif (Gate::allows('users_manage')) {
+              $invitecodes = Invitecode::get();
             }
-            $invitecodes = Invitecode::get();
+            
+            
             // toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -41,9 +47,9 @@ class InvitecodeController extends Controller
     public function create()
     {
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
-            }
+            // if (! Gate::allows('users_manage')) {
+            //     return abort(401);
+            // }
             //toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -64,11 +70,10 @@ class InvitecodeController extends Controller
     public function store(Request $request)
     {
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
-            }
+            
             Invitecode::create([
             'invitecode' => $request->invitecode,
+            'user_id' => $request->user_id,
             ]);
           
             toastr()->success('Data has been saved successfully!', 'Church Invite Code Managemant');
@@ -103,9 +108,9 @@ class InvitecodeController extends Controller
      */
     public function edit(Invitecode $invitecode)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
+        // if (! Gate::allows('users_manage')) {
+        //     return abort(401);
+        // }
         return view('admin.invitecode.edit', compact('invitecode'));
     }
 
@@ -119,12 +124,13 @@ class InvitecodeController extends Controller
     public function update(Request $request, Invitecode $invitecode)
     {
         try {
-            if (! Gate::allows('users_manage') ) {
-                return abort(401);
-            }
+            // if (! Gate::allows('users_manage') ) {
+            //     return abort(401);
+            // }
          
             $churchInviteCode = Invitecode::find($invitecode->id);
             $churchInviteCode->invitecode =  $request->get('invitecode');
+            $churchInviteCode->user_id =  $request->get('user_id');
             $churchInviteCode->save();
             toastr()->success('Data has been updated successfully!', 'Church Invite Code Managemant');
           }
@@ -144,9 +150,9 @@ class InvitecodeController extends Controller
     public function destroy(Invitecode $invitecode)
     {
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
-            }
+            // if (! Gate::allows('users_manage')) {
+            //     return abort(401);
+            // }
             $invitecode->delete();
             toastr()->success('Data has been deleted successfully!', 'Church Invite Code Managemant');
           }
@@ -162,9 +168,9 @@ class InvitecodeController extends Controller
     public function importcode(){
      
       try {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
+        // if (! Gate::allows('users_manage')) {
+        //     return abort(401);
+        // }
         //toastr()->success('Data has been saved successfully!', 'Church Managemant');
       }
       

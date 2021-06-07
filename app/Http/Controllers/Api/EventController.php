@@ -8,6 +8,10 @@ use App\Http\Resources\AppUserResource;
 use App\Http\Resources\EventlistResource;
 use App\models\Api\events as ApiEvents;
 use App\Http\Controllers\Traits\FileUploadTrait;
+use App\Http\Resources\FeedCommentsResource;
+use App\Http\Resources\FeedLikesResource;
+use App\Http\Resources\FeedSharesResource;
+use App\Http\Resources\FeedWitnessResource;
 use App\User;
 use App\models\Api\events;
 use App\models\Api\likes;
@@ -303,10 +307,12 @@ class EventController extends Controller
                     ->where('event_id',$request->id)
                     ->orderBy('created_at', 'DESC')
                     ->get();
+                    
+
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
-                            'data' => $eventLikes
+                            'data' => FeedLikesResource::collection($eventLikes)
                         ]);
                     }else{
                         return response()->json([
@@ -340,7 +346,7 @@ class EventController extends Controller
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
-                            'data' => $eventLikes
+                            'data' => FeedCommentsResource::collection($eventLikes)
                         ]);
                     }else{
                         return response()->json([
@@ -374,7 +380,7 @@ class EventController extends Controller
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
-                            'data' => $eventLikes
+                            'data' => FeedWitnessResource::collection($eventLikes)
                         ]);
                     }else{
                         return response()->json([
@@ -408,7 +414,7 @@ class EventController extends Controller
                     if(count($eventLikes) != 0){
                         return response()->json([
                             'success' => true,
-                            'data' => $eventLikes
+                            'data' => FeedSharesResource::collection($eventLikes)
                         ]);
                     }else{
                         return response()->json([

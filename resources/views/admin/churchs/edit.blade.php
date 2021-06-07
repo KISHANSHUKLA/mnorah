@@ -18,7 +18,7 @@
                 </label>
                 <select name="user_id" id="user_id" class="form-control select2" required>
                     @foreach($users as $id => $user)
-                        <option value="{{ $id }}" <?php if($church->user_id == $user->id){?> selected <?php } ?>>{{ $user->name }}</option>
+                        <option value="{{ $user->id }}" <?php if($church->user_id == $user->id){?> selected <?php } ?>>{{ $user->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('user_id'))

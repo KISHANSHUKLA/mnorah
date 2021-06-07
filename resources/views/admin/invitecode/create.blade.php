@@ -23,6 +23,7 @@
                     {{ trans('cruds.invitecode.fields.invitecode_helper') }}
                 </p>
             </div>
+            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
          
        
             <div style="float: left;

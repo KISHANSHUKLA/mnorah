@@ -11,13 +11,13 @@
             @csrf
                 <div class="col-md-6 float-left">
                <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
-                <label for="user_id">{{ trans('cruds.church.fields.name') }} *
+                <label for="user_id">Church Manager *
                     {{-- <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span> --}}
                 </label>
                 <select name="user_id" id="user_id" class="form-control select2" required>
                     @foreach($users as $id => $user)
-                        <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
+                        <option value="{{ $user->id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('user_id'))

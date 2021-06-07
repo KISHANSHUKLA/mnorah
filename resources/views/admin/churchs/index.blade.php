@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('users_manage')
+@canany(['church_manage','users_manage'])
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.churches.create") }}">
@@ -8,7 +8,7 @@
             </a>
         </div>
     </div>
-@endcan
+    @endcanany
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.church.title_singular') }} {{ trans('global.list') }}

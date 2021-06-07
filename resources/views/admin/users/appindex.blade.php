@@ -24,12 +24,7 @@
                         <th>
                             Leadership Team
                         </th>
-                        <th>
-                            Medically Verified
-                        </th>
-                        <th>
-                            Community Verified
-                        </th>
+                       
                         <th>
                             &nbsp;
                         </th>
@@ -60,30 +55,8 @@
                                 
                                  
                             </td>
-                                 <td>
-                                    <?php if($user->appuser->medicallyverified == 0){ ?>
-                                        <a class="btn btn-xs btn-warning" href="{{ route('admin.medically', $user->appuser->id) }}">
-                                            Deactive </a>
-                                    <?php } else {?>
-                                        <a class="btn btn-xs btn-success" href="{{ route('admin.medically', $user->appuser->id) }}">
-                                            Active </a>
-                                        <?php } ?>
                                 
-                                 
-                            </td>
 
-                            <td>
-                                <?php if($user->appuser->communityverified == 0){ ?>
-                                    <a class="btn btn-xs btn-warning" href="{{ route('admin.community', $user->appuser->id) }}">
-                                        Deactive </a>
-                                <?php } else {?>
-                                    <a class="btn btn-xs btn-success" href="{{ route('admin.community', $user->appuser->id) }}">
-                                        Active </a>
-                                    <?php } ?>
-                            
-                             
-                        </td>
-                            
                           
                             <td>
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">

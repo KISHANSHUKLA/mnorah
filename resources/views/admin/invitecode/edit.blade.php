@@ -23,6 +23,7 @@
                     {{ trans('cruds.invitecode.fields.invitecode_helper') }}
                 </p>
             </div>
+            <input type="hidden" name="user_id" value="{{ old('user_id', isset($invitecode) ? $invitecode->user_id : '') }}">
             
 
                            

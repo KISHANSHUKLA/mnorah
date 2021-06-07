@@ -19,8 +19,6 @@ class events extends Model
         $appUser = Appuser::where('user_id',$user->id)->first();
 
         $user['Leadershipteam'] = $appUser->Leadershipteam;
-        $user['medicallyverified'] = $appUser->medicallyverified;
-        $user['communityverified'] = $appUser->communityverified;
         $user['mobile'] = $appUser->mobile;
         $user['image'] = URL::to('/').''.$appUser->image;
         
@@ -31,5 +29,13 @@ class events extends Model
     public function user(){
 
         return $this->hasOne(User::class, 'id','user_id');
+    }
+
+    public function event($Id){
+
+        $events =  events::where('id',$Id)->first();
+        $events['image'] = URL::to('/').''.$events->image;
+
+        return $events;
     }
 }

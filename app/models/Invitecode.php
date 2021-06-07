@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invitecode extends Model
 {
-    protected $fillable = ['invitecode'];
+    protected $fillable = ['invitecode','user_id'];
 
 }

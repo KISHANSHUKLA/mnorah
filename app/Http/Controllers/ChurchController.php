@@ -24,25 +24,28 @@ class ChurchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
+      
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
-            }
+
+          if(Gate::allows('church_manage')) {
+            $churches = Church::with('user')
+            ->where('user_id',Auth::user()->id)
+            ->get();
+            }elseif (Gate::allows('users_manage')) {
             $churches = Church::with('user')
             ->get();
+            }
             
            // toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
           //catch exception
           catch(Exception $e) {
+            
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
-       
-
-      
-        return view('admin.churchs.index', compact('churches'));
+          return view('admin.churchs.index', compact('churches'));
     }
 
     /**
@@ -53,9 +56,21 @@ class ChurchController extends Controller
     public function create()
     {
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
+
+
+          if(Gate::allows('church_manage')) {
+            $users = User::where('id',Auth::id())->get();
+            $days = [
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
+              'Sunday',
+            ];
             }
+          elseif (Gate::allows('users_manage')) {
             $users = User::where('id','!=',Auth::id())->get();
             $days = [
               'Monday',
@@ -66,6 +81,9 @@ class ChurchController extends Controller
               'Saturday',
               'Sunday',
             ];
+            }
+
+          
             //toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -86,9 +104,9 @@ class ChurchController extends Controller
     public function store(StoreChurchRequest $request)
     {   
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
-            }
+            // if (! Gate::allows('users_manage')) {
+            //     return abort(401);
+            // }
             $image = $request->file('eventimage');
             
             $imageEvent = $this->saveImages($image,'event');
@@ -113,7 +131,7 @@ class ChurchController extends Controller
           
           //catch exception
           catch(Exception $e) {
-          
+            
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        
@@ -140,9 +158,8 @@ class ChurchController extends Controller
      */
     public function edit(Church $church)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
+      if(Gate::allows('church_manage')) {
+        $users = User::where('id',Auth::id())->get();
         $days = [
           'Monday',
           'Tuesday',
@@ -152,7 +169,19 @@ class ChurchController extends Controller
           'Saturday',
           'Sunday',
         ];
+        }
+      elseif (Gate::allows('users_manage')) {
         $users = User::where('id','!=',Auth::id())->get();
+        $days = [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday',
+        ];
+        }
         $church['days'] = json_decode($church->days);
         return view('admin.churchs.edit', compact('church', 'users','days'));
     }
@@ -168,10 +197,6 @@ class ChurchController extends Controller
     {
 
         try {
-            if (! Gate::allows('users_manage')) {
-                return abort(401);
-            }
-           
             $image = $request->file('eventimage');
             $imageEvent = $this->saveImages($image,'event');
 
@@ -195,7 +220,7 @@ class ChurchController extends Controller
             toastr()->success('Data has been updated successfully!', 'Church Managemant');
           }
           catch(Exception $e) {
-            dd($e->getMessage());
+            
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        
