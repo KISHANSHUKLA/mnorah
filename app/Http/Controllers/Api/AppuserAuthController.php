@@ -360,7 +360,11 @@ class AppuserAuthController extends Controller
             if(Auth::check()){
                 
                 $user = Appuser::where('user_id',Auth::user()->id)->first();
-                return new AppUserResource($user);
+                return response()->json([
+                    'status' => true,
+                     'data' => new AppUserResource($user),
+                  ]);
+                
 
             }else{
                 throw new Exception("Something went wrong!", 404);
