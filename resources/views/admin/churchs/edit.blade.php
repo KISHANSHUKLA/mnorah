@@ -182,7 +182,7 @@
         </div>
         <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('event') ? 'has-error' : '' }}">
-                <label for="event">{{ trans('cruds.church.fields.event') }} *</label>
+                <label for="event">{{ trans('cruds.church.fields.event') }}</label>
                 <input type="text" id="event" name="event" class="form-control" value="{{ old('event', isset($church) ? $church->event : '') }}">
                 @if($errors->has('event'))
                     <em class="invalid-feedback">
@@ -196,7 +196,7 @@
         </div>
         <div class="col-md-6 float-left">
             <div class="custom-file form-group {{ $errors->has('eventimage') ? 'has-error' : '' }}">
-                <label for="eventimage">Event Image Upload *</label>
+                <label for="eventimage">Event Image Upload</label>
                 <input type="file" name="eventimage[]" multiple value="{{ old('eventimage', isset($church) ? $church->eventimage : '') }}" class="custom-file-input" id="eventimage">
                 <label style="margin-top: 28px;" class="custom-file-label" for="eventimage">Choose file</label>
                 @if($errors->has('eventimage'))
@@ -210,16 +210,19 @@
               </div>
         
               <?php 
+              
                                     if(is_array(json_decode($church->eventimage))){
                                         $jsonDecodeImages = json_decode($church->eventimage);
                                     }else{
                                         $jsonDecodeImages = $church->eventimage;
                                     }
                                     ?> 
-               <?php foreach ($jsonDecodeImages as $key => $jsonDecodeImage) { ?>
+               <?php 
+               if($jsonDecodeImages != null){
+               foreach ($jsonDecodeImages as $key => $jsonDecodeImage) { ?>
                 <img width="30px" onclick="onClick(this)" style="    border-radius: 100px;float: right;
                 margin-top: 20px;" height="30px" src="{{ asset($jsonDecodeImage) }}">
-               <?php } ?>                    
+               <?php } } ?>                    
                                 
                                 
             <div style="float: left;

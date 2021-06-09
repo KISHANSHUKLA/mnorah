@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Gate;
 use App\models\Invitecode;
 use Exception;
 use App\Imports\BulkImport;
+use App\models\Church;
+use Spatie\SimpleExcel\SimpleExcelReader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleXLSX;
 
 class InvitecodeController extends Controller
 {
@@ -20,13 +23,12 @@ class InvitecodeController extends Controller
     {
         try {
           if(Gate::allows('church_manage')) {
-            $invitecodes = Invitecode::
-            where('user_id',Auth::user()->id)
+            $invitecodes = Invitecode::with('church','user')
+            ->where('user_id',Auth::user()->id)
             ->get();
             }elseif (Gate::allows('users_manage')) {
-              $invitecodes = Invitecode::get();
+              $invitecodes = Invitecode::with('church','user')->get();
             }
-            
             
             // toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
@@ -47,9 +49,13 @@ class InvitecodeController extends Controller
     public function create()
     {
         try {
-            // if (! Gate::allows('users_manage')) {
-            //     return abort(401);
-            // }
+          if(Gate::allows('church_manage')) {
+            $churchs = Church::
+            where('user_id',Auth::user()->id)
+            ->get();
+            }elseif (Gate::allows('users_manage')) {
+              $churchs = Church::get();
+            }
             //toastr()->success('Data has been saved successfully!', 'Church Managemant');
           }
           
@@ -58,7 +64,7 @@ class InvitecodeController extends Controller
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
       
-        return view('admin.invitecode.create');
+        return view('admin.invitecode.create',compact('churchs'));
     }
 
     /**
@@ -73,6 +79,7 @@ class InvitecodeController extends Controller
             
             Invitecode::create([
             'invitecode' => $request->invitecode,
+            'church_id' => $request->church_id,
             'user_id' => $request->user_id,
             ]);
           
@@ -108,10 +115,14 @@ class InvitecodeController extends Controller
      */
     public function edit(Invitecode $invitecode)
     {
-        // if (! Gate::allows('users_manage')) {
-        //     return abort(401);
-        // }
-        return view('admin.invitecode.edit', compact('invitecode'));
+      if(Gate::allows('church_manage')) {
+        $churchs = Church::
+        where('user_id',Auth::user()->id)
+        ->get();
+        }elseif (Gate::allows('users_manage')) {
+          $churchs = Church::get();
+        }
+        return view('admin.invitecode.edit', compact('invitecode','churchs'));
     }
 
     /**
@@ -130,6 +141,7 @@ class InvitecodeController extends Controller
          
             $churchInviteCode = Invitecode::find($invitecode->id);
             $churchInviteCode->invitecode =  $request->get('invitecode');
+            $churchInviteCode->church_id =  $request->get('church_id');
             $churchInviteCode->user_id =  $request->get('user_id');
             $churchInviteCode->save();
             toastr()->success('Data has been updated successfully!', 'Church Invite Code Managemant');
@@ -185,16 +197,70 @@ class InvitecodeController extends Controller
     public function import(Request $request){
 
       try {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
+        if (Gate::allows('users_manage')) {
+           
+        if ( $xlsx = SimpleXLSX::parse($request->file('import')) ) {
+          $i = 0;
+          foreach ($xlsx->rows(0) as $index => $rows) {
+
+            if($i != $index){
+              
+            $churchs = Church::where('name',$rows['1'])->first();
+            
+            if($churchs){
+              Invitecode::create([
+                'invitecode' => $rows['0'],
+                'church_id' => $churchs->id,
+                'user_id' => Auth::user()->id,
+                'global' => $rows['2'],
+                ]);
+
+            }
+          }
+
         }
-       Excel::import(new BulkImport,$request->file('import'));
+
+        } else {
+          echo SimpleXLSX::parseError();
+        }
+
+        }elseif (Gate::allows('church_manage')) {
+
+          if ( $xlsx = SimpleXLSX::parse($request->file('import')) ) {
+            $i = 0;
+            foreach ($xlsx->rows(0) as $index => $rows) {
+  
+              if($i != $index){
+                
+              $churchs = Church::where('name',$rows['1'])
+              ->where('user_id',Auth::user()->id)
+              ->first();
+              
+              if($churchs){
+                Invitecode::create([
+                  'invitecode' => $rows['0'],
+                  'church_id' => $churchs->id,
+                  'user_id' => Auth::user()->id,
+                  'global' => $rows['2'],
+                  ]);
+  
+              }
+            }
+  
+          }
+  
+          } else {
+            echo SimpleXLSX::parseError();
+          }
+          }
+
+      // Excel::import(new BulkImport,$request->file('import'));
            
         toastr()->success('Data has been Saved successfully!', 'Church Managemant');
       }
       
       catch(Exception $e) {
-       
+        dd($e->getMessage());
         toastr()->error('An error has occurred please try again later.', $e->getMessage());
       }
     

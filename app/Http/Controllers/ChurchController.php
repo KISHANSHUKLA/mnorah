@@ -11,9 +11,6 @@ use App\Http\Requests\Admin\StoreChurchRequest;
 use App\Http\Requests\Admin\UpdateChurchRequest;
 use Exception;
 use App\Http\Controllers\Traits\FileUploadTrait;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate as FacadesGate;
-use PhpParser\Node\Stmt\TryCatch;
 
 class ChurchController extends Controller
 {
@@ -107,9 +104,14 @@ class ChurchController extends Controller
             // if (! Gate::allows('users_manage')) {
             //     return abort(401);
             // }
+            if($request->file('eventimage')){
             $image = $request->file('eventimage');
-            
             $imageEvent = $this->saveImages($image,'event');
+            
+            $imageEvents = json_encode($imageEvent);
+            }else{
+              $imageEvents = NULL;
+            }
             Church::create([
             'user_id' => $request->user_id,
             'name' => $request->name,
@@ -123,7 +125,7 @@ class ChurchController extends Controller
             'leadership' => $request->leadership,
             'ministries' => $request->ministries,
             'event' => $request->event,
-            'eventimage' => json_encode($imageEvent),
+            'eventimage' => $imageEvents,
             ]);
           
             toastr()->success('Data has been saved successfully!', 'Church Managemant');
@@ -131,7 +133,7 @@ class ChurchController extends Controller
           
           //catch exception
           catch(Exception $e) {
-            
+            dd($e->getMessage());
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        
@@ -197,10 +199,16 @@ class ChurchController extends Controller
     {
 
         try {
-            $image = $request->file('eventimage');
-            $imageEvent = $this->saveImages($image,'event');
+             if($request->file('eventimage')){
+              $image = $request->file('eventimage');
+              $imageEvent = $this->saveImages($image,'event');              
+              $jsonEncode = array_merge(json_decode($church->eventimage),$imageEvent);
+              $imageEvents = json_encode($jsonEncode);
+            }else{
+              
+              $imageEvents = NULL;
+            }
 
-            $jsonEncode = array_merge(json_decode($church->eventimage),$imageEvent);
             $churchSave = Church::find($church->id);
             $churchSave->user_id =  $request->get('user_id');
             $churchSave->name =  $request->get('name');
@@ -214,13 +222,13 @@ class ChurchController extends Controller
             $churchSave->leadership = $request->get('leadership');
             $churchSave->ministries = $request->get('ministries');
             $churchSave->event = $request->get('event');
-            $churchSave->eventimage = json_encode($jsonEncode);
+            $churchSave->eventimage = $imageEvents;
 
             $churchSave->save();
             toastr()->success('Data has been updated successfully!', 'Church Managemant');
           }
           catch(Exception $e) {
-            
+            dd($e->getMessage());
             toastr()->error('An error has occurred please try again later.', $e->getMessage());
           }
        

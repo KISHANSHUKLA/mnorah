@@ -33,7 +33,7 @@ class UpdateChurchRequest extends FormRequest
             'vision' => 'required',
             'leadership' => 'required',
             'ministries' => 'required',
-            'event' => 'required',
+           // 'event' => 'required',
         ];
     }
 }

@@ -12,6 +12,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('permissions', 'Admin\PermissionsController');
     Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy');
     Route::resource('roles', 'Admin\RolesController');
+    Route::resource('feeds', 'feedController');
     Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
     Route::resource('users', 'Admin\UsersController');
     Route::get('appusers', 'Admin\UsersController@appUser')->name('appusers');
@@ -22,8 +23,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('import', 'InvitecodeController@import')->name('invitecode.import');   
     Route::get('/codestatus/{id}', 'InvitecodeController@codestatus')->name('codestatus');  
     Route::get('/leadership/{id}', 'Admin\UsersController@leadership')->name('leadership');  
-    // Route::get('/community/{id}', 'Admin\UsersController@community')->name('community');
-    // Route::get('/medically/{id}', 'Admin\UsersController@medically')->name('medically');
+     Route::get('/community/{id}', 'feedController@community')->name('community');
+     Route::get('/medically/{id}', 'feedController@medically')->name('medically');
 
     Route::get('/feed/{id}', 'Admin\UsersController@feedapprove')->name('approvefeed'); 
     Route::get('/rejectfeed/{id}', 'Admin\UsersController@rejectfeed')->name('rejectfeed');  

@@ -73,6 +73,26 @@
                      
                     </ul>
                 </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+                        <i class="fa-fw fas fa-users nav-icon">
+
+                        </i>
+                       Feeds Managment
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="{{ route("admin.feeds.index") }}" class="nav-link {{ request()->is('admin/feeds') || request()->is('admin/feeds/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-unlock-alt nav-icon">
+
+                                </i>
+                               Listing
+                            </a>
+                        </li>
+                     
+                    </ul>
+                </li>
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-users nav-icon">

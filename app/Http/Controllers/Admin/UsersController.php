@@ -240,59 +240,7 @@ class UsersController extends Controller
         
         return redirect()->route('admin.appusers');
       }
-      public function medically($Id){
-
-        try {
-          if (! Gate::allows('users_manage')) {
-              return abort(401);
-          }
-          $appUsermedicallyverified = Appuser::find($Id);
-          
-          if($appUsermedicallyverified->medicallyverified == 1){
-            $appUsermedicallyverified->medicallyverified =  0;   
-          }else{
-            $appUsermedicallyverified->medicallyverified =  1;
-          
-          }
-          $appUsermedicallyverified->save();
-             
-          toastr()->success('Status update successfully!', 'User Managemant');
-        }
-        
-        catch(Exception $e) {
-         
-          toastr()->error('An error has occurred please try again later.', $e->getMessage());
-        }
-        
-        return redirect()->route('admin.appusers');
-      } 
-
-      public function community($Id){
-
-        try {
-          if (! Gate::allows('users_manage')) {
-              return abort(401);
-          }
-          $appUsercommunityverified = Appuser::find($Id);
-          
-          if($appUsercommunityverified->communityverified == 1){
-            $appUsercommunityverified->communityverified =  0;   
-          }else{
-            $appUsercommunityverified->communityverified =  1;
-          
-          }
-          $appUsercommunityverified->save();
-             
-          toastr()->success('Status update successfully!', 'User Managemant');
-        }
-        
-        catch(Exception $e) {
-         
-          toastr()->error('An error has occurred please try again later.', $e->getMessage());
-        }
-        
-        return redirect()->route('admin.appusers');
-      } 
+      
 
 
       public function feedapprove($Id){

@@ -23,6 +23,29 @@
                     {{ trans('cruds.invitecode.fields.invitecode_helper') }}
                 </p>
             </div>
+
+            
+                <div class="form-group {{ $errors->has('church_id') ? 'has-error' : '' }}">
+                 <label for="church_id">Church *
+                     {{-- <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
+                     <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span> --}}
+                 </label>
+                 <select name="church_id" id="church_id" class="form-control select2" required>
+                     @foreach($churchs as $id => $church)
+                    <option value="{{ $church->id }}" {{ (in_array($id, old('roles', [])) || isset($church) && $church->id) ? 'selected' : '' }}>{{ $church->name }}</option>
+                     @endforeach
+                 </select>
+                 @if($errors->has('church_id'))
+                     <em class="invalid-feedback">
+                         {{ $errors->first('church_id') }}
+                     </em>
+                 @endif
+                 <p class="helper-block">
+                     {{ trans('cruds.church.fields.name_helper') }}
+                 </p>
+             
+         </div>
+
             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
          
        

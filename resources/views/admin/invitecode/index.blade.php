@@ -26,7 +26,13 @@
                             {{ trans('cruds.invitecode.fields.id') }}
                         </th>
                         <th>
+                            User Name
+                        </th>
+                        <th>
                             {{ trans('cruds.invitecode.fields.invitecode') }}
+                        </th>
+                        <th>
+                            Church Name
                         </th>
                         <th>
                             {{ trans('cruds.invitecode.fields.global') }}
@@ -47,10 +53,17 @@
                                 {{ $invitecode->id ?? '' }}
                             </td>
                             <td>
+                                {{ $invitecode->user->name ?? '' }}
+                            </td>
+                            <td>
                                 {{ $invitecode->invitecode ?? '' }}
                             </td>
                             <td>
-                                    <?php if($invitecode->global == 0){ ?>
+                                {{ $invitecode->church->name ?? '' }}
+                            </td>
+                            <td>
+                                
+                                    <?php if($invitecode->global == "false"){ ?>
                                         <a class="btn btn-xs btn-warning" href="{{ route('admin.codestatus', $invitecode->id) }}">
                                             Deactive </a>
                                     <?php } else {?>

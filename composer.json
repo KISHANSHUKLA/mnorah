@@ -15,7 +15,9 @@
         "laravelcollective/html": "^6.0",
         "lcobucci/jwt": "3.3.3",
         "maatwebsite/excel": "^3.1",
+        "shuchkin/simplexlsx": "^0.8.24",
         "spatie/laravel-permission": "^3.0",
+        "spatie/simple-excel": "^1.2",
         "yoeunes/toastr": "^1.2"
     },
     "require-dev": {

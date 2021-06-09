@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\URL;
 
 class events extends Model
 {
-    protected $fillable = ['user_id', 'message','image','status', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'message','image','status','medicallyverified','communityverified', 'created_at', 'updated_at'];
 
     public function userget($user_id){
 

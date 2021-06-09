@@ -125,10 +125,10 @@ $(document).ready(function() {
             },
 
             event: {
-                required: true
+                required: false
             },
             "eventimage[]": {
-                required: true,
+                required: false,
                 extension: "jpg|jpeg|png",
                 filesize: $("#eventimage").get(0).files.length * 1,
             }

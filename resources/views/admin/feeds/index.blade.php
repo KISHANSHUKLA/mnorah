@@ -1,17 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-@canany(['church_manage','users_manage'])
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.churches.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.church.title_singular') }}
-            </a>
-        </div>
-    </div>
-    @endcanany
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.church.title_singular') }} {{ trans('global.list') }}
+        Feeds List
     </div>
 
     <div class="card-body">
@@ -23,63 +14,69 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.church.fields.id') }}
+                            Message
                         </th>
                         <th>
-                            Church Manager
+                            Image
                         </th>
                         <th>
-                            {{ trans('cruds.church.fields.denomination') }}
+                            Medically Verified
                         </th>
                      
                         <th>
-                            {{ trans('cruds.church.fields.day') }}
+                            Community Verified
                         </th>
                        
-                        <th>
+                        {{-- <th>
                             &nbsp;
-                        </th>
+                        </th> --}}
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($churches as $key => $church)
-                        <tr data-entry-id="{{ $church->id }}">
+                    @foreach($feeds as $key => $feed)
+                        <tr data-entry-id="{{ $feed->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $church->id ?? '' }}
+                                {{ $feed->message ?? '' }}
                             </td>
                             <td>
-                                {{ $church->user->name ?? '' }}
+                                {{ $feed->image ?? '' }}
                             </td>
-                            <td>
-                                {{ $church->denomination ?? '' }}
+                           
+                                <td>
+                                    <?php if($feed->medicallyverified == 0){ ?>
+                                        <a class="btn btn-xs btn-warning" href="{{ route('admin.medically', $feed->id) }}">
+                                            Deactive </a>
+                                    <?php } else {?>
+                                        <a class="btn btn-xs btn-success" href="{{ route('admin.medically', $feed->id) }}">
+                                            Active </a>
+                                        <?php } ?>
+                                
+                                 
                             </td>
-                          
+                                
                             <td>
-                                <?php 
-                                if(is_array(json_decode($church->days))){
-                                    $date = implode(', ', json_decode($church->days));
-                                }else{
-                                    $date = date('l', strtotime($church->days));
-                                }
-                                ?>
-                                {{ $date ?? '' }}
+                                <?php if($feed->communityverified == 0){ ?>
+                                    <a class="btn btn-xs btn-warning" href="{{ route('admin.community', $feed->id) }}">
+                                        Deactive </a>
+                                <?php } else {?>
+                                    <a class="btn btn-xs btn-success" href="{{ route('admin.community', $feed->id) }}">
+                                        Active </a>
+                                    <?php } ?>
+                               
                             </td>
                          
-                            <td>
-                                <a class="btn btn-xs btn-info" href="{{ route('admin.churches.edit', $church->id) }}">
-                                    {{ trans('global.edit') }}
-                                </a>
-
-                                <form action="{{ route('admin.churches.destroy', $church->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                            {{-- <td>
+                              
+                                <form action="{{ route('admin.feeds.destroy', $feed->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                 </form>
 
-                            </td>
+                            </td> --}}
 
                         </tr>
                     @endforeach

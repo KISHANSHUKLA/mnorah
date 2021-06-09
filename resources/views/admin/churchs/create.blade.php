@@ -139,7 +139,8 @@
             <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('vision') ? 'has-error' : '' }}">
                 <label for="vision">{{ trans('cruds.church.fields.vision') }} *</label>
-                <input type="text" id="vision" name="vision" class="form-control">
+                <textarea rows="4" cols="50" id="vision" name="vision" class="form-control">
+                </textarea>
                 @if($errors->has('vision'))
                     <em class="invalid-feedback">
                         {{ $errors->first('vision') }}
@@ -153,7 +154,8 @@
             <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('leadership') ? 'has-error' : '' }}">
                 <label for="leadership">{{ trans('cruds.church.fields.leadership') }} *</label>
-                <input type="text" id="leadership" name="leadership" class="form-control" >
+                <textarea rows="4" cols="50" id="leadership" name="leadership" class="form-control" >
+                </textarea>
                 @if($errors->has('leadership'))
                     <em class="invalid-feedback">
                         {{ $errors->first('leadership') }}
@@ -180,7 +182,7 @@
             </div>
             <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('event') ? 'has-error' : '' }}">
-                <label for="event">{{ trans('cruds.church.fields.event') }} *</label>
+                <label for="event">{{ trans('cruds.church.fields.event') }}</label>
                 <input type="text" id="event" name="event" class="form-control" >
                 @if($errors->has('event'))
                     <em class="invalid-feedback">
@@ -194,7 +196,7 @@
             </div>
             <div class="col-md-6 float-left">
             <div class="custom-file form-group {{ $errors->has('eventimage') ? 'has-error' : '' }}">
-                <label for="eventimage">Event Image Upload *</label>
+                <label for="eventimage">Event Image Upload </label>
                 <input type="file" multiple name="eventimage[]" class="custom-file-input" id="eventimage">
                 <label style="    margin-top: 28px;" class="custom-file-label" for="eventimage">Choose file</label>
                 @if($errors->has('eventimage'))
