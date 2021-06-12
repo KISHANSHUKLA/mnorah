@@ -982,6 +982,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'CreateEventWitnessTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_19_122756_create_event_witness_table.php',
         'CreateEventsTableTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_14_073753_create_events_table_table.php',
         'CreateFollowersTableTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_13_052326_create_followers_table_table.php',
+        'CreateInvitecodeRequestTable' => __DIR__ . '/../..' . '/database/migrations/2021_06_11_051202_create_invitecode_request_table.php',
         'CreateInvitecodesTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_07_091213_create_invitecodes_table.php',
         'CreateLimitRecodeTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_28_050808_create_limit_recode_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',

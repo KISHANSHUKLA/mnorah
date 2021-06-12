@@ -20,6 +20,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('churches', 'ChurchController');
     Route::resource('invitecode', 'InvitecodeController');    
     Route::get('/codeimport', 'InvitecodeController@importcode')->name('codeimport');   
+    Route::get('/requestlist', 'InvitecodeController@requestlist')->name('requestlist');   
+    Route::get('/requestlist/{id}', 'InvitecodeController@requestlistEdit')->name('requestlist.edit');  
+    Route::put('/requestlistupdate/{id}', 'InvitecodeController@requestlistupdate')->name('requestlist.update');  
     Route::post('import', 'InvitecodeController@import')->name('invitecode.import');   
     Route::get('/codestatus/{id}', 'InvitecodeController@codestatus')->name('codestatus');  
     Route::get('/leadership/{id}', 'Admin\UsersController@leadership')->name('leadership');  

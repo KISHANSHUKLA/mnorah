@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\models\Api\inviteCodeRequest;
 use App\Appuser;
 use App\Exceptions\API\APIException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AppChurchResource;
 use App\Http\Controllers\Traits\FileUploadTrait;
 use App\Http\Resources\AppUserResource;
+use App\Http\Resources\RequestResource;
 use App\Http\Resources\UserResource;
 use App\models\Church;
+use App\models\Invitecode;
 use Error;
 use Exception;
 use Facade\FlareClient\Http\Response;
@@ -131,5 +134,81 @@ class AppChurchController extends Controller
           }
 
     }
+
+    public function invitecode(Request $request){
+
+
+        try {
+            
+            if(Auth::check()){
+                
+                $church_id = $request->get('church_id');
+                $user_id = Auth::user()->id;
+
+                $requestData = inviteCodeRequest::create([
+                    "user_id" => $user_id,
+                    "church_id" => $church_id,
+                    "status" => 0,
+                ]);
+                
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Invite code request send Successfully',
+                      ]);
+                }
+
+            }
+        //catch exception
+          catch(Exception $e) {
+              $e->getMessage();
+              return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+              ]);
+          }
+
+       }
+       public function invitecodecheck(Request $request){
+
+
+        try {
+            
+            if(Auth::check()){
+                
+                $church_id = $request->get('church_id');
+                $user_id = Auth::user()->id;
+                $invitecode =$request->get('invitecode');
+                $a =  Invitecode::where('invitecode',$invitecode)->first();
+                
+                $recode = inviteCodeRequest::with('user','church','invitecodedata')
+                ->where('user_id',$user_id)
+                ->where('church_id',$church_id)
+                ->where('invitecode',$a->id)->first();
+
+                if($recode){
+                    return response()->json([
+                        'success' => true,
+                        'data' => new RequestResource($recode)
+                      ]);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'data' => 'Recode not found!'
+                      ]);
+                }
+                    
+                }
+
+            }
+        //catch exception
+          catch(Exception $e) {
+              $e->getMessage();
+              return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+              ]);
+          }
+
+       }
   
 }

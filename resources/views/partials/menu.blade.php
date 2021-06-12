@@ -117,6 +117,14 @@
                                Invite Code Import
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.requestlist") }}" class="nav-link {{ request()->is('admin/invitecode') || request()->is('admin/invitecode/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-unlock-alt nav-icon">
+
+                                </i>
+                               Invite Code Request List
+                            </a>
+                        </li>
                      
                     </ul>
                 </li>

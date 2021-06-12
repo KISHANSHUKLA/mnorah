@@ -32,6 +32,8 @@ Route::get('emailVerification', 'Api\AppuserAuthController@emailVerification');
     Route::post('verifyEmail', 'Api\AppuserAuthController@verifyEmail');
     Route::resource('church', 'Api\AppChurchController');
     Route::post('search','Api\AppChurchController@getSearch');
+    Route::post('invitecode','Api\AppChurchController@invitecode');
+    Route::post('invitecodecheck','Api\AppChurchController@invitecodecheck');
     
     Route::post('churchDetail','Api\AppChurchController@churchDetail');
 

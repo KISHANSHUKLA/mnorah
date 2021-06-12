@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\models\Api\inviteCodeRequest;
 use Illuminate\Support\Facades\Gate;
 use App\models\Invitecode;
 use Exception;
 use App\Imports\BulkImport;
 use App\models\Church;
+use App\User;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use SimpleXLSX;
 
 class InvitecodeController extends Controller
@@ -291,6 +295,106 @@ class InvitecodeController extends Controller
       }
     
       return redirect()->route('admin.invitecode.index');
+    }
+
+    public function requestlist()
+    {
+        try {
+         
+            if (Gate::allows('users_manage')) {
+              $invitecodes = inviteCodeRequest::with('church','user','invitecodedata')
+              ->get();
+            }
+            
+            // toastr()->success('Data has been saved successfully!', 'Church Managemant');
+          }
+          
+          //catch exception
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+       
+        return view('admin.invitecode.indexrequest', compact('invitecodes'));
+    }
+
+    public function requestlistEdit($id)
+    {
+  
+      if (Gate::allows('users_manage')) {
+          $invitecodeRequest = inviteCodeRequest::where('id',$id)->first();
+          $invitecodeArrays = inviteCodeRequest::get();
+          $arrayData = array();
+          foreach($invitecodeArrays as $invitecodeArray){
+
+              $checkChurch = Invitecode::where('id',$invitecodeArray->invitecode)
+              ->where('global',"true")
+              ->first();
+             
+              if($checkChurch == null){
+              array_push($arrayData,$invitecodeArray->invitecode);
+              }
+            }
+          
+          $tags = implode(', ', $arrayData);
+          $myArray = explode(',', $tags);
+          
+          $getInviteCodes = Invitecode::where('church_id',$invitecodeRequest->church_id)
+          ->whereNotIn('id',$myArray)
+          ->get();
+        }
+        return view('admin.invitecode.editrequest', compact('getInviteCodes','invitecodeRequest'));
+    }
+
+    public function requestlistupdate(Request $request, $id)
+    {   
+      
+        try {
+            if (Gate::allows('users_manage') ) {
+
+              $churchInviteCode = inviteCodeRequest::find($id);
+              $user = User::find($churchInviteCode->user_id);
+              $to_name = $user->name;
+              $to_email = $user->email;
+              if($request->get('status') == 1){
+
+                $data = array('name'=>$to_name, "body" => 'Your request is rejected. Please contact administrator');
+                Mail::send('email.reject', $data, function($message) use ($to_name, $to_email) {
+                  $message->to($to_email, $to_name)->subject('Request Rejected');
+                  $message->from('kishanjshukla93@gmail.com','Request Rejected');
+                  });
+
+                  $churchInviteCode->status =  $request->get('status');
+                  $churchInviteCode->invitecode =  NULL;
+                  $churchInviteCode->save();
+                  
+                  toastr()->error('Request rejected successfully!', 'Church Invite Code Managemant');
+                  return redirect()->route('admin.requestlist');
+
+              }else{
+
+                $invitecodeFind = Invitecode::find($request->get('invitecode'));
+                $data = array('name'=>$to_name, "body" => 'Your request is approved. Your invite code is : '.$invitecodeFind->invitecode.'');
+                Mail::send('email.reject', $data, function($message) use ($to_name, $to_email) {
+                  $message->to($to_email, $to_name)->subject('Request Rejected');
+                  $message->from('kishanjshukla93@gmail.com','Request Rejected');
+                  });  
+
+              $churchInviteCode = inviteCodeRequest::find($id);
+              $churchInviteCode->invitecode =  $request->get('invitecode');
+              $churchInviteCode->status =  $request->get('status');
+
+              $churchInviteCode->save();
+              toastr()->success('Data has been updated successfully!', 'Church Invite Code Managemant');
+              }
+            }
+         
+            
+          }
+          catch(Exception $e) {
+            toastr()->error('An error has occurred please try again later.', $e->getMessage());
+          }
+       
+        return redirect()->route('admin.requestlist');
     }
     
 }
