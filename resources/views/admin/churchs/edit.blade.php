@@ -141,7 +141,9 @@
         <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('vision') ? 'has-error' : '' }}">
                 <label for="vision">{{ trans('cruds.church.fields.vision') }} *</label>
-                <input type="text" id="vision" name="vision" class="form-control" value="{{ old('vision', isset($church) ? $church->vision : '') }}">
+                <textarea rows="4" cols="50" id="vision" name="vision" class="form-control">
+                    {{ old('vision', isset($church) ? $church->vision : '') }}
+                </textarea>
                 @if($errors->has('vision'))
                     <em class="invalid-feedback">
                         {{ $errors->first('vision') }}
@@ -155,7 +157,9 @@
         <div class="col-md-6 float-left">
             <div class="form-group {{ $errors->has('leadership') ? 'has-error' : '' }}">
                 <label for="leadership">{{ trans('cruds.church.fields.leadership') }} *</label>
-                <input type="text" id="leadership" name="leadership" class="form-control" value="{{ old('leadership', isset($church) ? $church->leadership : '') }}">
+                <textarea rows="4" cols="50" id="leadership" name="leadership" class="form-control">
+                    {{ old('leadership', isset($church) ? $church->leadership : '') }}
+                </textarea>
                 @if($errors->has('leadership'))
                     <em class="invalid-feedback">
                         {{ $errors->first('leadership') }}

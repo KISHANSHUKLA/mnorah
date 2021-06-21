@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCharchuToUsersTable' => $baseDir . '/database/migrations/2021_06_21_041338_add_charchu_to_users_table.php',
     'AddDeviceTokenTable' => $baseDir . '/database/migrations/2021_05_10_122100_add_device_token_table.php',
     'AddEventImageToChurchesTable' => $baseDir . '/database/migrations/2021_05_06_123421_add_event_image_to_churches_table.php',
     'AddEventsVerifyedTable' => $baseDir . '/database/migrations/2021_06_08_175509_add_events_verifyed_table.php',
@@ -56,6 +57,7 @@ return array(
     'App\\Http\\Resources\\FeedSharesResource' => $baseDir . '/app/Http/Resources/FeedSharesResource.php',
     'App\\Http\\Resources\\FeedWitnessResource' => $baseDir . '/app/Http/Resources/FeedWitnessResource.php',
     'App\\Http\\Resources\\FollowlistResource' => $baseDir . '/app/Http/Resources/FollowlistResource.php',
+    'App\\Http\\Resources\\RequestResource' => $baseDir . '/app/Http/Resources/RequestResource.php',
     'App\\Http\\Resources\\UserResource' => $baseDir . '/app/Http/Resources/UserResource.php',
     'App\\Imports\\BulkImport' => $baseDir . '/app/Imports/BulkImport.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
@@ -67,6 +69,7 @@ return array(
     'App\\models\\Api\\comments' => $baseDir . '/app/models/Api/comments.php',
     'App\\models\\Api\\events' => $baseDir . '/app/models/Api/events.php',
     'App\\models\\Api\\followers' => $baseDir . '/app/models/Api/followers.php',
+    'App\\models\\Api\\inviteCodeRequest' => $baseDir . '/app/models/Api/inviteCodeRequest.php',
     'App\\models\\Api\\likes' => $baseDir . '/app/models/Api/likes.php',
     'App\\models\\Api\\limit' => $baseDir . '/app/models/Api/limit.php',
     'App\\models\\Api\\share' => $baseDir . '/app/models/Api/share.php',

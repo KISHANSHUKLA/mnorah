@@ -100,6 +100,7 @@ class ChurchController extends Controller
      */
     public function store(StoreChurchRequest $request)
     {   
+      
         try {
             // if (! Gate::allows('users_manage')) {
             //     return abort(401);

@@ -670,6 +670,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
     );
 
     public static $classMap = array (
+        'AddCharchuToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2021_06_21_041338_add_charchu_to_users_table.php',
         'AddDeviceTokenTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_10_122100_add_device_token_table.php',
         'AddEventImageToChurchesTable' => __DIR__ . '/../..' . '/database/migrations/2021_05_06_123421_add_event_image_to_churches_table.php',
         'AddEventsVerifyedTable' => __DIR__ . '/../..' . '/database/migrations/2021_06_08_175509_add_events_verifyed_table.php',
@@ -720,6 +721,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'App\\Http\\Resources\\FeedSharesResource' => __DIR__ . '/../..' . '/app/Http/Resources/FeedSharesResource.php',
         'App\\Http\\Resources\\FeedWitnessResource' => __DIR__ . '/../..' . '/app/Http/Resources/FeedWitnessResource.php',
         'App\\Http\\Resources\\FollowlistResource' => __DIR__ . '/../..' . '/app/Http/Resources/FollowlistResource.php',
+        'App\\Http\\Resources\\RequestResource' => __DIR__ . '/../..' . '/app/Http/Resources/RequestResource.php',
         'App\\Http\\Resources\\UserResource' => __DIR__ . '/../..' . '/app/Http/Resources/UserResource.php',
         'App\\Imports\\BulkImport' => __DIR__ . '/../..' . '/app/Imports/BulkImport.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -731,6 +733,7 @@ class ComposerStaticInitbe2b9f43002a288677ccbdfee125ae66
         'App\\models\\Api\\comments' => __DIR__ . '/../..' . '/app/models/Api/comments.php',
         'App\\models\\Api\\events' => __DIR__ . '/../..' . '/app/models/Api/events.php',
         'App\\models\\Api\\followers' => __DIR__ . '/../..' . '/app/models/Api/followers.php',
+        'App\\models\\Api\\inviteCodeRequest' => __DIR__ . '/../..' . '/app/models/Api/inviteCodeRequest.php',
         'App\\models\\Api\\likes' => __DIR__ . '/../..' . '/app/models/Api/likes.php',
         'App\\models\\Api\\limit' => __DIR__ . '/../..' . '/app/models/Api/limit.php',
         'App\\models\\Api\\share' => __DIR__ . '/../..' . '/app/models/Api/share.php',
