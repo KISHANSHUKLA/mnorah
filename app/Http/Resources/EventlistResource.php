@@ -26,6 +26,8 @@ class EventlistResource extends JsonResource
             'message' => $this->message,
             'image' => URL::to('/').''.$this->image,
             'status' => $this->status,
+            'communityverified' => $this->communityverified,
+            'medicallyverified' => $this->medicallyverified,
             'islike' => $a->like($this->id),
             'isshare' => $a->share($this->id),
             'like_count' => $a->likecount($this->id),
