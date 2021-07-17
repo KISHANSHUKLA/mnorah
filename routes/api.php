@@ -54,4 +54,25 @@ Route::get('emailVerification', 'Api\AppuserAuthController@emailVerification');
     Route::post('event/eventWitnessList','Api\EventController@eventWitnessList');
     Route::post('event/eventShareList','Api\EventController@eventShareList');
 
+    //Route::get('/group/create', 'Api\GroupController@create_form');
+    Route::get('/group/list', 'Api\GroupController@getGroups');
+    Route::post('/group/create', 'Api\GroupController@create');
+    //Route::get('/group/edit/{id}', 'Api\GroupController@edit');
+    Route::post('/group/update/{id}', 'Api\GroupController@update');
+    Route::delete('/group/delete/{id}', 'Api\GroupController@delete');
+    Route::get('/types', 'Api\GroupController@types');
+    Route::get('/group/{id}', 'Api\GroupController@show_group');
+    Route::post('/send_message/{id}', 'Api\MessageController@send_message');
+    Route::get('/send_message/type/{id}', 'Api\MessageController@typemessage');
+
+
+    //Route::get('/group/join', 'Api\GroupController@join_form');
+
+    Route::post('/group/join', 'Api\GroupController@join');
+
+    //Route::get('/group/{id}', 'Api\GroupController@show_group');
+    Route::get('/group/members_list/{id}', 'Api\GroupController@members_list');
+
+    Route::get('/remove_user/{id}/{user_id}', 'Api\GroupController@remove_user');
+    //Route::get('/show_messages/{id}', 'Api\MessageController@show_messages');
 });

@@ -61,5 +61,20 @@ class User extends Authenticatable
     return $this->belongsToMany(Church::class, 'followers', 'follower_id', 'church_id')->withTimestamps();
     }
 
+    public function group()
+    {
+        return $this->belongsToMany('App\models\Api\Group', 'admin_id');
+    }
+
+    public function group_member()
+    {
+        return $this->belongsToMany('App\models\Api\Group', 'group_participants', 'user_id', 'group_id')->orderBy('updated_at', 'desc');
+    }
+
+    public function message()
+    {
+        return $this->hasMany('App\models\Api\Message', 'user_id');
+    }
+
 
 }
